@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the Gocanto Template Package
+ * This file is part of the Gocanto Attributes Package
  *
  * (c) Gustavo Ocanto <gustavoocanto@gmail.com>
  *
@@ -13,17 +13,17 @@ declare(strict_types=1);
 
 namespace Gocanto\Converter\Tests;
 
-use Gocanto\MyTemplate\Example;
+use Gocanto\Attributes\Attributes;
 use PHPUnit\Framework\TestCase;
 
-class ExampleTest extends TestCase
+class AttributesTest extends TestCase
 {
     /**
      * @test
      */
     public function itDoesntWork()
     {
-        $example = new Example;
+        $example = new Attributes;
 
         $this->assertEquals('Gustavo Ocanto', $example->getAuthor());
     }

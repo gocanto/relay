@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the Gocanto Template Package
+ * This file is part of the Gocanto Attributes Package
  *
  * (c) Gustavo Ocanto <gustavoocanto@gmail.com>
  *
@@ -11,9 +11,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Gocanto\MyTemplate;
+namespace Gocanto\Attributes;
 
-class Example
+class Attributes
 {
     /**
      * @return string

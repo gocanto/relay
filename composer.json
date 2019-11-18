@@ -1,15 +1,15 @@
 {
   "license": "MIT",
-  "name": "gocanto/my-template",
-  "homepage": "https://github.com/gocanto/my-template",
+  "name": "gocanto/attributes",
+  "homepage": "https://github.com/gocanto/attributes",
   "type": "php-bundle",
-  "description": "Personal flavor packages template.",
+  "description": "Validated attributes bag.",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "keywords": [
     "php",
-    "packages",
-    "template"
+    "attributes",
+    "bag"
   ],
   "authors": [
     {
@@ -18,8 +18,8 @@
     }
   ],
   "support": {
-    "source": "https://github.com/gocanto/my-template",
-    "issues": "https://github.com/gocanto/my-template/issues"
+    "source": "https://github.com/gocanto/attributes",
+    "issues": "https://github.com/gocanto/attributes/issues"
   },
   "require": {
       "php": "^7.3",
@@ -40,12 +40,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Gocanto\\MyTemplate\\": "src"
+      "Gocanto\\Attributes\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Gocanto\\MyTemplate\\Tests\\": "tests"
+      "Gocanto\\Attributes\\Tests\\": "tests"
     }
   },
   "config": {
