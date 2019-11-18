@@ -16,13 +16,13 @@ class Validator
      */
     public function __construct(array $rules = [])
     {
-        $this->addManyRule($rules);
+        $this->addManyRules($rules);
     }
 
     /**
      * @param array $rules
      */
-    public function addManyRule(array $rules): void
+    public function addManyRules(array $rules): void
     {
         foreach ($rules as $rule) {
             $this->addRule($rule);
