@@ -34,8 +34,28 @@ class AttributesTest extends TestCase
      */
     public function itHoldsTheRequiredData()
     {
-        $dummy = new DummyAttributes;
+        $dummy = new DummyAttributes([]);
 
         $this->assertEquals($this->fillable, $dummy->getFillable());
+    }
+
+    /**
+     * @test
+     */
+    public function itCheckForExistingValues()
+    {
+        $dummy = new DummyAttributes([
+            'bar' => '001',
+            'foo' => null,
+            'biz' => '',
+            'gus' => ' ',
+        ]);
+
+        $this->assertFalse($dummy->filled('foo'));
+        $this->assertFalse($dummy->filled('biz'));
+        $this->assertFalse($dummy->filled('MISSING-KEY'));
+
+        $this->assertTrue($dummy->filled('bar'));
+        $this->assertTrue($dummy->filled('gus'));
     }
 }

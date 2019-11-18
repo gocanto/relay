@@ -15,7 +15,16 @@ namespace Gocanto\Attributes;
 
 abstract class Attributes
 {
-    private $attributes;
+    /** @var array */
+    private $data;
+
+    /**
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        $this->data = $data;
+    }
 
     /**
      * @return array
@@ -23,10 +32,29 @@ abstract class Attributes
     abstract public function getFillable(): array;
 
     /**
+     * @param array $seeds
+     * @return bool
+     */
+    public function filled(...$seeds): bool
+    {
+        foreach ($seeds as $seed) {
+            if (!array_key_exists($seed, $this->data)) {
+                return false;
+            }
+
+            if (empty($this->data[$seed])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * @return array
      */
     public function toArray(): array
     {
-        return $this->attributes;
+        return $this->data;
     }
 }
