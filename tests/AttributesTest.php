@@ -13,18 +13,29 @@ declare(strict_types=1);
 
 namespace Gocanto\Converter\Tests;
 
-use Gocanto\Attributes\Attributes;
+use Gocanto\Attributes\Tests\Stubs\DummyAttributes;
 use PHPUnit\Framework\TestCase;
 
 class AttributesTest extends TestCase
 {
+    /** @var array */
+    private $fillable;
+
+    protected function setUp(): void
+    {
+        $this->fillable = [
+            'foo',
+            'bar',
+        ];
+    }
+
     /**
      * @test
      */
-    public function itDoesntWork()
+    public function itHoldsTheRequiredData()
     {
-        $example = new Attributes;
+        $dummy = new DummyAttributes;
 
-        $this->assertEquals('Gustavo Ocanto', $example->getAuthor());
+        $this->assertEquals($this->fillable, $dummy->getFillable());
     }
 }

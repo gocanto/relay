@@ -13,13 +13,20 @@ declare(strict_types=1);
 
 namespace Gocanto\Attributes;
 
-class Attributes
+abstract class Attributes
 {
+    private $attributes;
+
     /**
-     * @return string
+     * @return array
      */
-    public function getAuthor() : string
+    abstract public function getFillable(): array;
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
     {
-        return 'Gustavo Ocanto';
+        return $this->attributes;
     }
 }
