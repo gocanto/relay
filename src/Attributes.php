@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Gocanto\Attributes;
 
+use Gocanto\Attributes\Rules\Validator;
+
 abstract class Attributes
 {
     /** @var array */
@@ -20,16 +22,31 @@ abstract class Attributes
 
     /**
      * @param array $data
+     * @throws AttributeException
      */
     public function __construct(array $data)
     {
-        $this->data = $data;
+        $this->data = $this->validated($data);
     }
 
     /**
+     * @param array $data
      * @return array
+     * @throws AttributeException
      */
-    abstract public function getFillable(): array;
+    private function validated(array $data): array
+    {
+        $validator = $this->getValidator();
+
+        $validator->validate($data);
+
+        return $data;
+    }
+
+    /**
+     * @return Validator
+     */
+    abstract public function getValidator(): Validator;
 
     /**
      * @param array $seeds
