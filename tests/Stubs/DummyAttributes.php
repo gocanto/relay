@@ -6,19 +6,20 @@ namespace Gocanto\Attributes\Tests\Stubs;
 
 use Gocanto\Attributes\Attributes;
 use Gocanto\Attributes\Rules\Rule;
-use Gocanto\Attributes\Rules\Required;
-use Gocanto\Attributes\Rules\Validator;
+use Gocanto\Attributes\Rules\RuleException;
+use Gocanto\Attributes\Rules\RulesCollection;
+use Gocanto\Attributes\Rules\Runners\Required;
 
 class DummyAttributes extends Attributes
 {
     /**
-     * @return Validator
+     * @return RulesCollection
+     * @throws RuleException
      */
-    public function getValidator(): Validator
+    public function getValidationRules(): RulesCollection
     {
-        return new Validator([
-            Rule::make('foo')->addVerifier(new Required),
-            Rule::make('bar'),
+        return new RulesCollection([
+            Rule::make('foo')->addRunner(new Required),
         ]);
     }
 }

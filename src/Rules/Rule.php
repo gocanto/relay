@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace Gocanto\Attributes\Rules;
 
+use Gocanto\Attributes\Rules\Runners\Runner;
+use Gocanto\Attributes\Rules\Runners\RunnersCollection;
+
 class Rule
 {
     /** @var string */
-    private $field;
-    /** @var Verifiers */
-    private $verifiers;
-
-    private function __construct()
-    {
-        $this->verifiers = new Verifiers;
-    }
+    private $target;
+    /** @var RunnersCollection */
+    private $runners;
 
     /**
      * @param string $field
@@ -22,49 +20,48 @@ class Rule
      */
     public static function make(string $field): Rule
     {
-        $input = new static;
-        $input->field = $field;
+        $rule = new static;
 
-        return $input;
+        $rule->target = $field;
+
+        return $rule;
     }
 
     /**
-     * @param array $verifiers
-     * @return Rule
+     * @param Runner[] $runners
+     * @throws RuleException
      */
-    public function addVerifiers(array $verifiers): Rule
+    public function addRunners(array $runners): void
     {
-        foreach ($verifiers as $verifier) {
-            $this->verifiers->addMany($verifier);
+        if ($this->runners === null) {
+            $this->runners = new RunnersCollection($runners);
         }
 
-        return $this;
+        $this->runners->addMany($runners);
     }
 
     /**
-     * @param Verifier $verifier
-     * @return Rule
+     * @param Runner $runner
+     * @throws RuleException
      */
-    public function addVerifier(Verifier $verifier): Rule
+    public function addRunner(Runner $runner): void
     {
-        $this->verifiers->add($verifier);
+        if ($this->runners === null) {
+            $this->runners = new RunnersCollection([$runner]);
+        }
 
-        return $this;
-    }
-
-    /**
-     * @return Verifiers
-     */
-    public function getVerifiers(): Verifiers
-    {
-        return $this->verifiers;
+        $this->runners->add($runner);
     }
 
     /**
      * @return string
      */
-    public function getField(): string
+    public function getTarget(): string
     {
-        return $this->field;
+        return $this->target;
+    }
+
+    private function __construct()
+    {
     }
 }

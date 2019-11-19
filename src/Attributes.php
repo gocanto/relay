@@ -46,7 +46,7 @@ abstract class Attributes
     /**
      * @return Validator
      */
-    abstract public function getValidator(): Validator;
+//    abstract public function getValidator(): Validator;
 
     /**
      * @param array $seeds
