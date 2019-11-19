@@ -59,6 +59,15 @@ final class RulesCollection
     }
 
     /**
+     * @param string $target
+     * @return Rule|null
+     */
+    public function findByTarget(string $target): ?Rule
+    {
+        return $this->rules[$target] ?? null;
+    }
+
+    /**
      * @return Rule[]
      */
     public function all(): array

@@ -61,6 +61,14 @@ class Rule
         return $this->target;
     }
 
+    /**
+     * @return RunnersCollection
+     */
+    public function getRunners(): RunnersCollection
+    {
+        return $this->runners;
+    }
+
     private function __construct()
     {
     }

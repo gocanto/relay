@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Gocanto\Attributes;
 
-use Gocanto\Attributes\Rules\Validator;
+use Gocanto\Attributes\Rules\RulesCollection;
 
 abstract class Attributes
 {
@@ -36,17 +36,19 @@ abstract class Attributes
      */
     private function validated(array $data): array
     {
-        $validator = $this->getValidator();
+        $validator = new Validator(
+            $this->getValidationRules()
+        );
 
-        $validator->validate($data);
+        $validator->run($data);
 
         return $data;
     }
 
     /**
-     * @return Validator
+     * @return RulesCollection
      */
-//    abstract public function getValidator(): Validator;
+    abstract public function getValidationRules(): RulesCollection;
 
     /**
      * @param array $seeds

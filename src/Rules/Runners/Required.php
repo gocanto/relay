@@ -15,9 +15,10 @@ class Required implements Runner
     }
 
     /**
+     * @param mixed $value
      * @return bool
      */
-    public function canReject(): bool
+    public function canReject($value): bool
     {
         return true;
     }

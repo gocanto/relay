@@ -12,7 +12,8 @@ interface Runner
     public function getIdentifier(): string;
 
     /**
+     * @param mixed $value
      * @return bool
      */
-    public function canReject(): bool;
+    public function canReject($value): bool;
 }
