@@ -20,6 +20,6 @@ class Required implements Runner
      */
     public function canReject($value): bool
     {
-        return true;
+        return !empty($value);
     }
 }
