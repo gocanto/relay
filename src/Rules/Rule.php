@@ -47,7 +47,11 @@ class Rule
     public function addRunner(Runner $runner): void
     {
         if ($this->runners === null) {
-            $this->runners = new RunnersCollection([$runner]);
+            $this->runners = new RunnersCollection([$runner->getIdentifier() => $runner]);
+        }
+
+        if ($this->runners->has($runner->getIdentifier())) {
+            return;
         }
 
         $this->runners->add($runner);

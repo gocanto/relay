@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Gocanto\Converter\Tests;
 
+use Gocanto\Attributes\AttributeException;
 use Gocanto\Attributes\Tests\Stubs\DummyAttributes;
 use PHPUnit\Framework\TestCase;
 
@@ -31,31 +32,12 @@ class AttributesTest extends TestCase
 
     /**
      * @test
+     * @throws AttributeException
      */
     public function itHoldsTheRequiredData()
     {
         $dummy = new DummyAttributes([]);
 
 //        $this->assertEquals($this->fillable, $dummy->getFillable());
-    }
-
-    /**
-     * @test
-     */
-    public function itCheckForExistingValues()
-    {
-//        $dummy = new DummyAttributes([
-//            'bar' => '001',
-//            'foo' => null,
-//            'biz' => '',
-//            'gus' => ' ',
-//        ]);
-//
-//        $this->assertFalse($dummy->filled('foo'));
-//        $this->assertFalse($dummy->filled('biz'));
-//        $this->assertFalse($dummy->filled('MISSING-KEY'));
-//
-//        $this->assertTrue($dummy->filled('bar'));
-//        $this->assertTrue($dummy->filled('gus'));
     }
 }

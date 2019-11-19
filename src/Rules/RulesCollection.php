@@ -20,9 +20,14 @@ final class RulesCollection
 
     /**
      * @param Rule $rule
+     * @throws RuleException
      */
     public function add(Rule $rule): void
     {
+        if (array_key_exists($rule->getTarget(), $this->rules)) {
+            throw new RuleException('The given rule is already added.');
+        }
+
         $this->rules[$rule->getTarget()] = $rule;
     }
 
@@ -33,10 +38,6 @@ final class RulesCollection
     public function addMany(array $rules): void
     {
         foreach ($rules as $rule) {
-            if (!$rule instanceof Rule) {
-                throw new RuleException('The given rules is invalid.');
-            }
-
             $this->add($rule);
         }
     }

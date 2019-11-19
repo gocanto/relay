@@ -12,12 +12,12 @@ class RunnersCollection
     private $runners = [];
 
     /**
-     * @param Runner[] $runner
+     * @param Runner[] $runners
      * @throws RuleException
      */
-    public function __construct(array $runner)
+    public function __construct(array $runners)
     {
-        $this->addMany($runner);
+        $this->addMany($runners);
     }
 
     /**
@@ -42,6 +42,15 @@ class RunnersCollection
         foreach ($runners as $rule) {
             $this->add($rule);
         }
+    }
+
+    /**
+     * @param string $key
+     * @return bool
+     */
+    public function has(string $key): bool
+    {
+        return isset($this->runners[$key]);
     }
 
     /**
