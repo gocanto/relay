@@ -46,7 +46,7 @@ final class RulesCollection
      */
     public function add(string $field, array $constraints): void
     {
-        if (Arr::has($constraints, $field)) {
+        if (Arr::exists($constraints, $field)) {
             throw new AttributesException("The given [{$field}] constraints already exist.");
         }
 

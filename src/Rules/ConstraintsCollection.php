@@ -65,7 +65,7 @@ final class ConstraintsCollection
      */
     public function has(Constraint $constraint): bool
     {
-        return Arr::has($this->constraints, $constraint->getIdentifier());
+        return Arr::exists($this->constraints, $constraint->getIdentifier());
     }
 
     /**

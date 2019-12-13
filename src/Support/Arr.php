@@ -2,15 +2,30 @@
 
 namespace Gocanto\Attributes\Support;
 
+use ArrayAccess;
+
 class Arr
 {
+    /**
+     * @param $array
+     * @return bool
+     */
+    public static function accessible($array): bool
+    {
+        return is_array($array) || $array instanceof ArrayAccess;
+    }
+
     /**
      * @param array $array
      * @param string $key
      * @return bool
      */
-    public static function has(array $array, string $key): bool
+    public static function exists(array $array, string $key): bool
     {
+        if ($array instanceof ArrayAccess) {
+            return $array->offsetExists($key);
+        }
+
         return array_key_exists($key, $array);
     }
 
@@ -21,16 +36,20 @@ class Arr
      */
     public static function get(array $array, string $key)
     {
-        if (static::has($array, $key)) {
+        if (!static::accessible($array)) {
+            return null;
+        }
+
+        if (static::exists($array, $key)) {
             return $array[$key];
         }
 
         if (strpos($key, '.') === false) {
-            return $array[$key];
+            return $array[$key] ?? null;
         }
 
         foreach (explode('.', $key) as $segment) {
-            if (is_array($array) && static::has($array, $segment)) {
+            if (static::accessible($array) && static::exists($array, $segment)) {
                 $array = $array[$segment];
             } else {
                 return null;
@@ -50,7 +69,7 @@ class Arr
         $results = [];
 
         foreach ($array as $key => $value) {
-            if (is_array($value) && !empty($value)) {
+            if (static::accessible($value) && !empty($value)) {
                 $results = array_merge($results, static::dot($value, $prepend . $key . '.'));
             } else {
                 $results[$prepend . $key] = $value;
