@@ -7,7 +7,7 @@ use Gocanto\Attributes\Rules\Validators\Required;
 
 class DummyAttributes extends Attributes
 {
-    public function getValidationRules(): array
+    protected function getValidationRules(): array
     {
         return [
             'name' => [new Required],

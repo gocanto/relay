@@ -54,11 +54,6 @@ abstract class Attributes
     }
 
     /**
-     * @return Constraint[]
-     */
-    abstract public function getValidationRules(): array;
-
-    /**
      * @param array $seeds
      * @return bool
      */
@@ -83,5 +78,13 @@ abstract class Attributes
     public function toArray(): array
     {
         return $this->data;
+    }
+
+    /**
+     * @return Constraint[]
+     */
+    protected function getValidationRules(): array
+    {
+        return [];
     }
 }
