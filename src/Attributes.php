@@ -34,11 +34,19 @@ abstract class Attributes
      */
     private function validated(array $data): array
     {
-        $validator = new Validator(
-            $this->getValidationRules()
-        );
+        $rules = $this->getValidationRules();
 
-        $validator->run($data);
+        if ($rules->isEmpty()) {
+            return $data;
+        }
+
+        if (empty($data)) {
+            throw new AttributeException('The given data is invalid.');
+        }
+
+        $validator = new Validator($rules);
+
+        $validator->validate($data);
 
         return $data;
     }

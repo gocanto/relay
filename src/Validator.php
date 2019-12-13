@@ -17,28 +17,24 @@ use Gocanto\Attributes\Rules\RulesCollection;
 class Validator
 {
     /** @var RulesCollection */
-    private $rules;
+    private $rulesCollection;
 
     /**
-     * @param RulesCollection $rules
+     * @param RulesCollection $rulesCollection
      */
-    public function __construct(RulesCollection $rules)
+    public function __construct(RulesCollection $rulesCollection)
     {
-        $this->rules = $rules;
+        $this->rulesCollection = $rulesCollection;
     }
 
     /**
      * @param array $data
      * @throws AttributeException
      */
-    public function run(array $data): void
+    public function validate(array $data): void
     {
-        if ($this->rules->isEmpty()) {
-            return;
-        }
-
         foreach ($data as $target => $value) {
-            $rule = $this->rules->findByTarget($target);
+            $rule = $this->rulesCollection->findByTarget($target);
 
             if ($rule !== null) {
                 $this->assertDataIntegrity($rule, $value);
@@ -57,7 +53,9 @@ class Validator
 
         foreach ($runners->all() as $runner) {
             if ($runner->canReject($value)) {
-                throw new AttributeException("The given target [{$rule->getTarget()}] value is invalid.");
+                throw new AttributeException(
+                    "The given value [{$rule->getTarget()}] is invalid based on the [{$runner->getIdentifier()}] rule."
+                );
             }
         }
     }

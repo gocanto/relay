@@ -9,18 +9,24 @@
  * file that was distributed with this source code.
  */
 
-namespace Gocanto\Attributes\Rules\Runners;
+namespace Gocanto\Attributes\Runners;
 
-interface Runner
+class Required implements Runner
 {
     /**
      * @return string
      */
-    public function getIdentifier(): string;
+    public function getIdentifier(): string
+    {
+        return 'required';
+    }
 
     /**
      * @param mixed $value
      * @return bool
      */
-    public function canReject($value): bool;
+    public function canReject($value): bool
+    {
+        return empty($value);
+    }
 }

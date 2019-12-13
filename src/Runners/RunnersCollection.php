@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Gocanto\Attributes\Rules\Runners;
+namespace Gocanto\Attributes\Runners;
 
 use Gocanto\Attributes\Rules\RuleException;
 

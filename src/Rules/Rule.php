@@ -11,8 +11,8 @@
 
 namespace Gocanto\Attributes\Rules;
 
-use Gocanto\Attributes\Rules\Runners\Runner;
-use Gocanto\Attributes\Rules\Runners\RunnersCollection;
+use Gocanto\Attributes\Runners\Runner;
+use Gocanto\Attributes\Runners\RunnersCollection;
 
 class Rule
 {

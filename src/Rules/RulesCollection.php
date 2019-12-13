@@ -58,6 +58,14 @@ final class RulesCollection
     }
 
     /**
+     * @return bool
+     */
+    public function isNotEmpty(): bool
+    {
+        return !$this->isEmpty();
+    }
+
+    /**
      * @param string $key
      * @return bool
      */
