@@ -13,21 +13,47 @@ namespace Gocanto\Attributes;
 
 use Gocanto\Attributes\Rules\Constraint;
 use Gocanto\Attributes\Rules\RulesCollection;
+use Gocanto\Attributes\Validator\Validator;
+use Gocanto\Attributes\Validator\ValidatorManager;
 
 abstract class Attributes
 {
     /** @var array */
     private $data;
+    /** @var Validator */
+    private $validator;
 
     /**
      * @param array $data
+     * @param Validator|null $validator
      * @throws AttributesException
      */
-    public function __construct(array $data)
+    public function __construct(array $data, Validator $validator = null)
     {
+        $this->validator = $validator ?? $this->resolveValidator();
+
         $this->guard($data);
 
         $this->data = $data;
+    }
+
+    /**
+     * @return Validator
+     * @throws AttributesException
+     */
+    private function resolveValidator(): Validator
+    {
+        if ($this->validator !== null) {
+            return $this->validator;
+        }
+
+        $rules = new RulesCollection(
+            $this->getValidationRules()
+        );
+
+        $this->validator = new ValidatorManager($rules);
+
+        return $this->validator;
     }
 
     /**
@@ -36,40 +62,17 @@ abstract class Attributes
      */
     private function guard(array $data): void
     {
-        $rules = new RulesCollection(
-            $this->getValidationRules()
-        );
-
-        if ($rules->isEmpty()) {
-            return;
-        }
-
         if (empty($data)) {
             throw new AttributesException('The given data is invalid.');
         }
 
-        $validator = new Validator($rules);
+        $validator = $this->resolveValidator();
 
-        $validator->validate($data);
-    }
-
-    /**
-     * @param array $seeds
-     * @return bool
-     */
-    public function filled(...$seeds): bool
-    {
-        foreach ($seeds as $seed) {
-            if (!array_key_exists($seed, $this->data)) {
-                return false;
-            }
-
-            if (empty($this->data[$seed])) {
-                return false;
-            }
+        if ($validator->isEmpty()) {
+            return;
         }
 
-        return true;
+        $validator->validate($data);
     }
 
     /**

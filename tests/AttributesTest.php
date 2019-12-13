@@ -1,43 +1,56 @@
 <?php declare(strict_types=1);
 
-/*
- * This file is part of the Gocanto Attributes Package
- *
- * (c) Gustavo Ocanto <gustavoocanto@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Gocanto\Attributes\Tests;
 
-use Gocanto\Attributes\AttributesException;
-use Gocanto\Attributes\Tests\Stubs\DummyAttributes;
+use Gocanto\Attributes\Attributes;
+use Gocanto\Attributes\Validator\Validator;
+use Mockery;
+use Mockery\LegacyMockInterface;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 
 class AttributesTest extends TestCase
 {
-    /**
-     * @test
-     * @throws AttributesException
-     */
-    public function itGuardsAgainstEmptyAttributes()
-    {
-        $this->expectException(AttributesException::class);
+    /** @var Validator|LegacyMockInterface|MockInterface */
+    private $validator;
 
-        new DummyAttributes([]);
+    protected function setUp(): void
+    {
+        $this->validator = Mockery::mock(Validator::class);
     }
 
     /**
      * @test
-     * @throws AttributesException
      */
-    public function itGuardsAgainstRequiredValues()
+    public function itProperlySerializesDataAsArray()
     {
-        $this->expectException(AttributesException::class);
+        $data = [
+            'foo' => 'bar',
+        ];
 
-        new DummyAttributes([
-            'name' => '',
-        ]);
+        $this->validator->shouldReceive('isEmpty')->once()->andReturn(true);
+
+        $attr = new class($data) extends Attributes {
+        };
+
+        $this->assertEquals($attr->toArray(), $data);
+    }
+
+    /**
+     * @test
+     */
+    public function itTriesToValidateTheGivenDataIfRulesWhereFound()
+    {
+        $data = [
+            'foo' => 'bar',
+        ];
+
+        $this->validator->shouldReceive('isEmpty')->once()->andReturn(false);
+        $this->validator->shouldReceive('validate')->once()->with($data);
+
+        $attr = new class($data, $this->validator) extends Attributes {
+        };
+
+        $this->assertEquals($attr->toArray(), $data);
     }
 }

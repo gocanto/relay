@@ -9,12 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Gocanto\Attributes;
+namespace Gocanto\Attributes\Validator;
 
+use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Rules\ConstraintsCollection;
 use Gocanto\Attributes\Rules\RulesCollection;
 
-class Validator
+final class ValidatorManager implements Validator
 {
     /** @var RulesCollection */
     private $rules;
@@ -25,6 +26,14 @@ class Validator
     public function __construct(RulesCollection $rules)
     {
         $this->rules = $rules;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEmpty(): bool
+    {
+        return $this->rules->isEmpty();
     }
 
     /**
