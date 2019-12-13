@@ -12,6 +12,7 @@
 namespace Gocanto\Attributes\Rules;
 
 use Gocanto\Attributes\AttributesException;
+use Gocanto\Attributes\Support\Arr;
 
 final class RulesCollection
 {
@@ -45,7 +46,7 @@ final class RulesCollection
      */
     public function add(string $field, array $constraints): void
     {
-        if ($this->has($field)) {
+        if (Arr::has($constraints, $field)) {
             throw new AttributesException("The given [{$field}] constraints already exist.");
         }
 
@@ -62,16 +63,7 @@ final class RulesCollection
      */
     public function getFor(string $field): ?ConstraintsCollection
     {
-        return $this->rules[$field] ?? null;
-    }
-
-    /**
-     * @param string $field
-     * @return bool
-     */
-    public function has(string $field): bool
-    {
-        return array_key_exists($field, $this->rules);
+        return Arr::get($this->rules, $field);
     }
 
     /**

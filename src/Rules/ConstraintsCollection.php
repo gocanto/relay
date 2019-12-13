@@ -12,6 +12,7 @@
 namespace Gocanto\Attributes\Rules;
 
 use Gocanto\Attributes\AttributesException;
+use Gocanto\Attributes\Support\Arr;
 
 final class ConstraintsCollection
 {
@@ -64,7 +65,7 @@ final class ConstraintsCollection
      */
     public function has(Constraint $constraint): bool
     {
-        return array_key_exists($constraint->getIdentifier(), $this->constraints);
+        return Arr::has($this->constraints, $constraint->getIdentifier());
     }
 
     /**
