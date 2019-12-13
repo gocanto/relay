@@ -1,6 +1,13 @@
-<?php
+<?php declare(strict_types=1);
 
-declare(strict_types=1);
+/*
+ * This file is part of the Gocanto Attributes Package
+ *
+ * (c) Gustavo Ocanto <gustavoocanto@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Gocanto\Attributes\Rules;
 
@@ -19,6 +26,17 @@ final class RulesCollection
     }
 
     /**
+     * @param array $rules
+     * @throws RuleException
+     */
+    public function addMany(array $rules): void
+    {
+        foreach ($rules as $rule) {
+            $this->add($rule);
+        }
+    }
+
+    /**
      * @param Rule $rule
      * @throws RuleException
      */
@@ -29,17 +47,6 @@ final class RulesCollection
         }
 
         $this->rules[$rule->getTarget()] = $rule;
-    }
-
-    /**
-     * @param array $rules
-     * @throws RuleException
-     */
-    public function addMany(array $rules): void
-    {
-        foreach ($rules as $rule) {
-            $this->add($rule);
-        }
     }
 
     /**
@@ -56,7 +63,7 @@ final class RulesCollection
      */
     public function has(string $key): bool
     {
-        return isset($this->rules[$key]);
+        return !empty($this->rules[$key]);
     }
 
     /**

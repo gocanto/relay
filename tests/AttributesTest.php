@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 /*
  * This file is part of the Gocanto Attributes Package
@@ -11,33 +9,17 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Gocanto\Converter\Tests;
+namespace Gocanto\Attributes\Tests;
 
-use Gocanto\Attributes\AttributeException;
-use Gocanto\Attributes\Tests\Stubs\DummyAttributes;
 use PHPUnit\Framework\TestCase;
 
 class AttributesTest extends TestCase
 {
-    /** @var array */
-    private $fillable;
-
-    protected function setUp(): void
-    {
-        $this->fillable = [
-            'foo',
-            'bar',
-        ];
-    }
-
     /**
      * @test
-     * @throws AttributeException
      */
-    public function itHoldsTheRequiredData()
+    public function itDoesntWork()
     {
-        $dummy = new DummyAttributes([]);
 
-//        $this->assertEquals($this->fillable, $dummy->getFillable());
     }
 }

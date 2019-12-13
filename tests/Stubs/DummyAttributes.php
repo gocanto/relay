@@ -1,16 +1,8 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Gocanto\Attributes\Tests\Stubs;
 
-use Gocanto\Attributes\Attributes;
-use Gocanto\Attributes\Rules\Rule;
-use Gocanto\Attributes\Rules\RuleException;
-use Gocanto\Attributes\Rules\RulesCollection;
-use Gocanto\Attributes\Rules\Runners\Required;
-
-class DummyAttributes extends Attributes
+class DummyAttributes
 {
     /**
      * @return RulesCollection
