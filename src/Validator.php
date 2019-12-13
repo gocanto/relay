@@ -11,20 +11,20 @@
 
 namespace Gocanto\Attributes;
 
-use Gocanto\Attributes\Rules\Rule;
+use Gocanto\Attributes\Rules\ConstraintsCollection;
 use Gocanto\Attributes\Rules\RulesCollection;
 
 class Validator
 {
     /** @var RulesCollection */
-    private $rulesCollection;
+    private $rules;
 
     /**
-     * @param RulesCollection $rulesCollection
+     * @param RulesCollection $rules
      */
-    public function __construct(RulesCollection $rulesCollection)
+    public function __construct(RulesCollection $rules)
     {
-        $this->rulesCollection = $rulesCollection;
+        $this->rules = $rules;
     }
 
     /**
@@ -33,29 +33,28 @@ class Validator
      */
     public function validate(array $data): void
     {
-        foreach ($data as $target => $value) {
-            $rule = $this->rulesCollection->findByTarget($target);
+        foreach ($data as $field => $value) {
+            $constraints = $this->rules->getFor($field);
 
-            if ($rule !== null) {
-                $this->assertDataIntegrity($rule, $value);
+            if ($constraints !== null && $constraints->isNotEmpty()) {
+                $this->assertDataIntegrity($constraints, $field, $value);
             }
         }
     }
 
     /**
-     * @param Rule $rule
-     * @param $value
+     * @param ConstraintsCollection $constraints
+     * @param string $field
+     * @param mixed $value
      * @throws AttributeException
      */
-    private function assertDataIntegrity(Rule $rule, $value): void
+    private function assertDataIntegrity(ConstraintsCollection $constraints, string $field, $value): void
     {
-        $runners = $rule->getRunners();
+        foreach ($constraints->get() as $constraints) {
+            if ($constraints->canReject($value)) {
+                $error = "The given [{$field}] value does not abide by [{$constraints->getIdentifier()}] rule.";
 
-        foreach ($runners->all() as $runner) {
-            if ($runner->canReject($value)) {
-                throw new AttributeException(
-                    "The given value [{$rule->getTarget()}] is invalid based on the [{$runner->getIdentifier()}] rule."
-                );
+                throw new AttributeException($error);
             }
         }
     }

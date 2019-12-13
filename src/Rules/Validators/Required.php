@@ -9,9 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Gocanto\Attributes\Runners;
+namespace Gocanto\Attributes\Rules\Validators;
 
-class Required implements Runner
+use Gocanto\Attributes\Rules\Constraint;
+
+class Required implements Constraint
 {
     /**
      * @return string

@@ -11,14 +11,16 @@
 
 namespace Gocanto\Attributes\Rules;
 
+use Gocanto\Attributes\AttributeException;
+
 final class RulesCollection
 {
-    /** @var Rule[] */
+    /** @var array */
     private $rules = [];
 
     /**
-     * @param Rule[] $rules
-     * @throws RuleException
+     * @param array $rules
+     * @throws AttributeException
      */
     public function __construct(array $rules)
     {
@@ -27,26 +29,49 @@ final class RulesCollection
 
     /**
      * @param array $rules
-     * @throws RuleException
+     * @throws AttributeException
      */
     public function addMany(array $rules): void
     {
-        foreach ($rules as $rule) {
-            $this->add($rule);
+        foreach ($rules as $field => $constraints) {
+            $this->add($field, $constraints);
         }
     }
 
     /**
-     * @param Rule $rule
-     * @throws RuleException
+     * @param string $field
+     * @param Constraint[] $constraints
+     * @throws AttributeException
      */
-    public function add(Rule $rule): void
+    public function add(string $field, array $constraints): void
     {
-        if (array_key_exists($rule->getTarget(), $this->rules)) {
-            throw new RuleException('The given rule is already added.');
+        if ($this->has($field)) {
+            throw new AttributeException("The given [{$field}] constraints already exist.");
         }
 
-        $this->rules[$rule->getTarget()] = $rule;
+        if (empty($constraints)) {
+            throw new AttributeException("The given [{$field}] constraints are required.");
+        }
+
+        $this->rules[$field] = new ConstraintsCollection($field, $constraints);
+    }
+
+    /**
+     * @param string $field
+     * @return ConstraintsCollection|null
+     */
+    public function getFor(string $field): ?ConstraintsCollection
+    {
+        return $this->rules[$field] ?? null;
+    }
+
+    /**
+     * @param string $field
+     * @return bool
+     */
+    public function has(string $field): bool
+    {
+        return array_key_exists($field, $this->rules);
     }
 
     /**
@@ -55,39 +80,5 @@ final class RulesCollection
     public function isEmpty(): bool
     {
         return count($this->rules) === 0;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isNotEmpty(): bool
-    {
-        return !$this->isEmpty();
-    }
-
-    /**
-     * @param string $key
-     * @return bool
-     */
-    public function has(string $key): bool
-    {
-        return !empty($this->rules[$key]);
-    }
-
-    /**
-     * @param string $target
-     * @return Rule|null
-     */
-    public function findByTarget(string $target): ?Rule
-    {
-        return $this->rules[$target] ?? null;
-    }
-
-    /**
-     * @return Rule[]
-     */
-    public function all(): array
-    {
-        return $this->rules;
     }
 }

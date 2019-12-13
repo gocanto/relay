@@ -9,10 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Gocanto\Attributes\Runners;
+namespace Gocanto\Attributes\Rules;
 
-use Gocanto\Attributes\AttributeException;
-
-class RunnersException extends AttributeException
+interface Constraint
 {
+    /**
+     * @return string
+     */
+    public function getIdentifier(): string;
+
+    /**
+     * @param mixed $value
+     * @return bool
+     */
+    public function canReject($value): bool;
 }

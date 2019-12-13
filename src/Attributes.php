@@ -11,6 +11,7 @@
 
 namespace Gocanto\Attributes;
 
+use Gocanto\Attributes\Rules\Constraint;
 use Gocanto\Attributes\Rules\RulesCollection;
 
 abstract class Attributes
@@ -24,20 +25,23 @@ abstract class Attributes
      */
     public function __construct(array $data)
     {
-        $this->data = $this->validated($data);
+        $this->guard($data);
+
+        $this->data = $data;
     }
 
     /**
      * @param array $data
-     * @return array
      * @throws AttributeException
      */
-    private function validated(array $data): array
+    private function guard(array $data): void
     {
-        $rules = $this->getValidationRules();
+        $rules = new RulesCollection(
+            $this->getValidationRules()
+        );
 
         if ($rules->isEmpty()) {
-            return $data;
+            return;
         }
 
         if (empty($data)) {
@@ -47,14 +51,12 @@ abstract class Attributes
         $validator = new Validator($rules);
 
         $validator->validate($data);
-
-        return $data;
     }
 
     /**
-     * @return RulesCollection
+     * @return Constraint[]
      */
-    abstract public function getValidationRules(): RulesCollection;
+    abstract public function getValidationRules(): array;
 
     /**
      * @param array $seeds
