@@ -13,6 +13,6 @@ namespace Gocanto\Attributes;
 
 use Exception;
 
-class AttributeException extends Exception
+class AttributesException extends Exception
 {
 }

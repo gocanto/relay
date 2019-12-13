@@ -11,7 +11,7 @@
 
 namespace Gocanto\Attributes\Tests;
 
-use Gocanto\Attributes\AttributeException;
+use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Tests\Stubs\DummyAttributes;
 use PHPUnit\Framework\TestCase;
 
@@ -19,22 +19,22 @@ class AttributesTest extends TestCase
 {
     /**
      * @test
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function itGuardsAgainstEmptyAttributes()
     {
-        $this->expectException(AttributeException::class);
+        $this->expectException(AttributesException::class);
 
         new DummyAttributes([]);
     }
 
     /**
      * @test
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function itGuardsAgainstRequiredValues()
     {
-        $this->expectException(AttributeException::class);
+        $this->expectException(AttributesException::class);
 
         new DummyAttributes([
             'name' => '',

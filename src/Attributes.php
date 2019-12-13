@@ -21,7 +21,7 @@ abstract class Attributes
 
     /**
      * @param array $data
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function __construct(array $data)
     {
@@ -32,7 +32,7 @@ abstract class Attributes
 
     /**
      * @param array $data
-     * @throws AttributeException
+     * @throws AttributesException
      */
     private function guard(array $data): void
     {
@@ -45,7 +45,7 @@ abstract class Attributes
         }
 
         if (empty($data)) {
-            throw new AttributeException('The given data is invalid.');
+            throw new AttributesException('The given data is invalid.');
         }
 
         $validator = new Validator($rules);

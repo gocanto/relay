@@ -11,7 +11,7 @@
 
 namespace Gocanto\Attributes\Rules;
 
-use Gocanto\Attributes\AttributeException;
+use Gocanto\Attributes\AttributesException;
 
 final class ConstraintsCollection
 {
@@ -23,7 +23,7 @@ final class ConstraintsCollection
     /**
      * @param string $field
      * @param Constraint[] $constraints
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function __construct(string $field, array $constraints)
     {
@@ -33,7 +33,7 @@ final class ConstraintsCollection
 
     /**
      * @param Constraint[] $constraints
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function addMany(array $constraints): void
     {
@@ -44,12 +44,12 @@ final class ConstraintsCollection
 
     /**
      * @param Constraint $constraint
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function add(Constraint $constraint): void
     {
         if ($this->has($constraint)) {
-            throw new AttributeException(sprintf('The given constraint [%s] was already attached to [%s].', [
+            throw new AttributesException(sprintf('The given constraint [%s] was already attached to [%s].', [
                 $constraint->getIdentifier(),
                 $this->field,
             ]));

@@ -11,7 +11,7 @@
 
 namespace Gocanto\Attributes\Rules;
 
-use Gocanto\Attributes\AttributeException;
+use Gocanto\Attributes\AttributesException;
 
 final class RulesCollection
 {
@@ -20,7 +20,7 @@ final class RulesCollection
 
     /**
      * @param array $rules
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function __construct(array $rules)
     {
@@ -29,7 +29,7 @@ final class RulesCollection
 
     /**
      * @param array $rules
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function addMany(array $rules): void
     {
@@ -41,16 +41,16 @@ final class RulesCollection
     /**
      * @param string $field
      * @param Constraint[] $constraints
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function add(string $field, array $constraints): void
     {
         if ($this->has($field)) {
-            throw new AttributeException("The given [{$field}] constraints already exist.");
+            throw new AttributesException("The given [{$field}] constraints already exist.");
         }
 
         if (empty($constraints)) {
-            throw new AttributeException("The given [{$field}] constraints are required.");
+            throw new AttributesException("The given [{$field}] constraints are required.");
         }
 
         $this->rules[$field] = new ConstraintsCollection($field, $constraints);

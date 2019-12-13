@@ -11,8 +11,8 @@
 
 namespace Gocanto\Attributes\Rules;
 
-use Gocanto\Attributes\AttributeException;
+use Gocanto\Attributes\AttributesException;
 
-class RuleException extends AttributeException
+class RuleException extends AttributesException
 {
 }

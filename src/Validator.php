@@ -29,7 +29,7 @@ class Validator
 
     /**
      * @param array $data
-     * @throws AttributeException
+     * @throws AttributesException
      */
     public function validate(array $data): void
     {
@@ -46,7 +46,7 @@ class Validator
      * @param ConstraintsCollection $constraints
      * @param string $field
      * @param mixed $value
-     * @throws AttributeException
+     * @throws AttributesException
      */
     private function assertDataIntegrity(ConstraintsCollection $constraints, string $field, $value): void
     {
@@ -54,7 +54,7 @@ class Validator
             if ($constraints->canReject($value)) {
                 $error = "The given [{$field}] value does not abide by [{$constraints->getIdentifier()}] rule.";
 
-                throw new AttributeException($error);
+                throw new AttributesException($error);
             }
         }
     }
