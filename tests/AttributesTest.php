@@ -3,6 +3,7 @@
 namespace Gocanto\Attributes\Tests;
 
 use Gocanto\Attributes\Attributes;
+use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Validator\Validator;
 use Mockery;
 use Mockery\LegacyMockInterface;
@@ -17,6 +18,18 @@ class AttributesTest extends TestCase
     protected function setUp(): void
     {
         $this->validator = Mockery::mock(Validator::class);
+    }
+
+    /**
+     * @test
+     */
+    public function itGuardsAgainstEmptyData()
+    {
+        $this->expectException(AttributesException::class);
+        $this->expectExceptionMessageMatches('/The given data is invalid/');
+
+        new class([]) extends Attributes {
+        };
     }
 
     /**
