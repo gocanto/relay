@@ -35,6 +35,10 @@ class RulesCollection
     public function addMany(array $rules): void
     {
         foreach ($rules as $field => $constraints) {
+            if (!is_string($field)) {
+                throw new AttributesException("The given data key [{$field}] is invalid.");
+            }
+
             $this->add($field, $constraints);
         }
     }
@@ -46,7 +50,7 @@ class RulesCollection
      */
     public function add(string $field, array $constraints): void
     {
-        if (Arr::exists($constraints, $field)) {
+        if (Arr::exists($this->rules, $field)) {
             throw new AttributesException("The given [{$field}] constraints already exist.");
         }
 
