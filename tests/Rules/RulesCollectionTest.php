@@ -51,8 +51,7 @@ class RulesCollectionTest extends TestCase
         $this->expectException(AttributesException::class);
         $this->expectExceptionMessageMatches('/constraints already exist/');
 
-        $constraint = Mockery::mock(Constraint::class);
-        $constraint->shouldReceive('getIdentifier')->andReturn('foo');
+        $constraint = $this->getConstraintMock();
 
         $collection = new RulesCollection([
             'foo' => [$constraint],
@@ -70,8 +69,7 @@ class RulesCollectionTest extends TestCase
         $this->expectException(AttributesException::class);
         $this->expectExceptionMessageMatches('/constraints are required/');
 
-        $constraint = Mockery::mock(Constraint::class);
-        $constraint->shouldReceive('getIdentifier')->andReturn('foo');
+        $constraint = $this->getConstraintMock();
 
         $collection = new RulesCollection([
             'foo' => [$constraint],
