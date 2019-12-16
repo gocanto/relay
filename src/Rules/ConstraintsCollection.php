@@ -50,10 +50,7 @@ class ConstraintsCollection
     public function add(Constraint $constraint): void
     {
         if ($this->has($constraint)) {
-            throw new AttributesException(sprintf('The given constraint [%s] was already attached to [%s].', [
-                $constraint->getIdentifier(),
-                $this->field,
-            ]));
+            throw new AttributesException("The given constraint [{$constraint->getIdentifier()}] already exists.");
         }
 
         $this->constraints[$constraint->getIdentifier()] = $constraint;
