@@ -20,7 +20,7 @@ abstract class Attributes
 {
     /** @var array */
     private $data;
-    /** @var Validator */
+    /** @var Validator|null */
     private $validator;
 
     /**
