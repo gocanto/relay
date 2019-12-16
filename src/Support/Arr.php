@@ -16,11 +16,11 @@ class Arr
     }
 
     /**
-     * @param array $array
+     * @param array|ArrayAccess $array
      * @param string $key
      * @return bool
      */
-    public static function exists(array $array, string $key): bool
+    public static function exists($array, string $key): bool
     {
         if ($array instanceof ArrayAccess) {
             return $array->offsetExists($key);
@@ -30,11 +30,11 @@ class Arr
     }
 
     /**
-     * @param array $array
+     * @param array|ArrayAccess $array
      * @param string $key
      * @return array|mixed
      */
-    public static function get(array $array, string $key)
+    public static function get($array, string $key)
     {
         if (!static::accessible($array)) {
             return null;

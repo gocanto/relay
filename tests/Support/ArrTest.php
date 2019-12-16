@@ -42,6 +42,10 @@ class ArrTest extends TestCase
     {
         $this->assertTrue(Arr::exists($this->fields, 'name'));
         $this->assertFalse(Arr::exists($this->fields, 'address.country'));
+
+        $array = Mockery::mock(ArrayAccess::class);
+        $array->shouldReceive('offsetExists')->once()->with('name')->andReturn(true);
+        $this->assertTrue(Arr::exists($array, 'name'));
     }
 
     /**
@@ -49,6 +53,8 @@ class ArrTest extends TestCase
      */
     public function itAllowsPullingValuesUsingDotNotation()
     {
+        $this->assertNull(Arr::get('__INVALID___', 'name'));
+
         $this->assertSame('Gustavo', Arr::get($this->fields, 'name'));
         $this->assertSame('Venezuela', Arr::get($this->fields, 'address.country'));
         $this->assertSame('biz value', Arr::get($this->fields, 'address.foo.bar'));
