@@ -37,7 +37,7 @@ final class ValidatorManager implements Validator
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @throws AttributesException
      */
     public function validate(array $data): void

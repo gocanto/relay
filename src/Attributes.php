@@ -24,7 +24,7 @@ abstract class Attributes
     private $validator;
 
     /**
-     * @param array<int|string, mixed> $data
+     * @param array<string, mixed> $data
      * @param Validator|null $validator
      * @throws AttributesException
      */
@@ -57,7 +57,7 @@ abstract class Attributes
     }
 
     /**
-     * @param array<int|string, mixed> $data
+     * @param array<string, mixed> $data
      * @throws AttributesException
      */
     private function guard(array $data): void

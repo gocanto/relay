@@ -12,7 +12,7 @@ interface Validator
     public function isEmpty(): bool;
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @throws AttributesException
      */
     public function validate(array $data): void;
