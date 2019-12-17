@@ -23,7 +23,8 @@
   },
   "require": {
     "php": "^7.3",
-    "ext-json": "*"
+    "ext-json": "*",
+    "webmozart/assert": "^1.6"
   },
   "require-dev": {
     "phpunit/phpunit": "^8.0.0",
