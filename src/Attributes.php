@@ -24,7 +24,7 @@ abstract class Attributes
     private $validator;
 
     /**
-     * @param array $data
+     * @param array<int|string, mixed> $data
      * @param Validator|null $validator
      * @throws AttributesException
      */
@@ -57,7 +57,7 @@ abstract class Attributes
     }
 
     /**
-     * @param array $data
+     * @param array<int|string, mixed> $data
      * @throws AttributesException
      */
     private function guard(array $data): void
@@ -76,7 +76,7 @@ abstract class Attributes
     }
 
     /**
-     * @return array
+     * @return array<int|string, mixed>
      */
     public function toArray(): array
     {
@@ -84,7 +84,7 @@ abstract class Attributes
     }
 
     /**
-     * @return Constraint[]
+     * @return array<int|string, Constraint>
      */
     protected function getValidationRules(): array
     {
