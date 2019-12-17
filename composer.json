@@ -53,6 +53,9 @@
       ],
       "coverage": [
           "php vendor/bin/phpunit --testsuite=Unit --coverage-html=public/coverage --colors=always"
+      ],
+      "analysis": [
+          "php vendor/bin/psalm"
       ]
   }
 }
