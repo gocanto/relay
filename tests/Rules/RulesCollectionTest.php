@@ -34,18 +34,6 @@ class RulesCollectionTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itRejectsRulesDataInputWithInvalidKeys()
-    {
-        $this->expectException(AttributesException::class);
-        $this->expectExceptionMessageMatches('/[0]/');
-
-        new RulesCollection(['']);
-    }
-
-    /**
-     * @test
-     * @throws AttributesException
-     */
     public function itGuardsAgainstDuplicateFieldRulesSet()
     {
         $this->expectException(AttributesException::class);

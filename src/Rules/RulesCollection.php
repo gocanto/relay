@@ -20,7 +20,7 @@ class RulesCollection
     private $rules = [];
 
     /**
-     * @param array $rules
+     * @param array<string, mixed> $rules
      * @throws AttributesException
      */
     public function __construct(array $rules)
@@ -29,23 +29,19 @@ class RulesCollection
     }
 
     /**
-     * @param array $rules
+     * @param array<string, mixed> $rules
      * @throws AttributesException
      */
     public function addMany(array $rules): void
     {
         foreach ($rules as $field => $constraints) {
-            if (!is_string($field)) {
-                throw new AttributesException("The given data key [{$field}] is invalid.");
-            }
-
             $this->add($field, $constraints);
         }
     }
 
     /**
      * @param string $field
-     * @param Constraint[] $constraints
+     * @param array<int, Constraint> $constraints
      * @throws AttributesException
      */
     public function add(string $field, array $constraints): void

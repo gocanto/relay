@@ -84,7 +84,7 @@ abstract class Attributes
     }
 
     /**
-     * @return array<int|string, Constraint>
+     * @return array<string, Constraint>
      */
     protected function getValidationRules(): array
     {
