@@ -12,7 +12,21 @@
 namespace Gocanto\Attributes;
 
 use Exception;
+use Throwable;
 
 class AttributesException extends Exception
 {
+    /**
+     * @param Throwable $exception
+     * @param string $message
+     * @return AttributesException
+     */
+    public static function fromThrowable(Throwable $exception, string $message = ''): AttributesException
+    {
+        $message = trim($message) === ''
+            ? $exception->getMessage()
+            : $message;
+
+        return new static($message, (int) $exception->getCode(), $exception);
+    }
 }

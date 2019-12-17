@@ -34,11 +34,7 @@ class Required implements Constraint
         try {
             Assert::notEmpty($value, $message);
         } catch (InvalidArgumentException $exception) {
-            $message = trim($message) === ''
-                ? $exception->getMessage()
-                : $message;
-
-            throw new AttributesException($message, $exception->getCode(), $exception);
+            throw AttributesException::fromThrowable($exception, $message);
         }
     }
 }
