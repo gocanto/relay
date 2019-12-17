@@ -18,12 +18,12 @@ class ConstraintsCollection
 {
     /** @var string */
     private $field;
-    /** @var Constraint[] */
+    /** @var array<string, Constraint> */
     private $constraints = [];
 
     /**
      * @param string $field
-     * @param Constraint[] $constraints
+     * @param array<int, Constraint> $constraints
      * @throws AttributesException
      */
     public function __construct(string $field, array $constraints)
@@ -33,7 +33,7 @@ class ConstraintsCollection
     }
 
     /**
-     * @param Constraint[] $constraints
+     * @param array<int, Constraint> $constraints
      * @throws AttributesException
      */
     public function addMany(array $constraints): void
