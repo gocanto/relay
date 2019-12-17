@@ -5,7 +5,7 @@ namespace Gocanto\Attributes\Support;
 class Arr
 {
     /**
-     * @param array $array
+     * @param array<int|string, mixed> $array
      * @param string $key
      * @return bool
      */
@@ -15,9 +15,9 @@ class Arr
     }
 
     /**
-     * @param array $array
+     * @param array<int|string, mixed> $array
      * @param string $key
-     * @return array|mixed
+     * @return array<int|string, mixed>|mixed
      */
     public static function get(array $array, string $key)
     {
@@ -41,9 +41,9 @@ class Arr
     }
 
     /**
-     * @param array $array
+     * @param array<int|string, mixed> $array
      * @param string $prepend
-     * @return array
+     * @return array<int|string, mixed>
      */
     public static function dot(array $array, string $prepend = ''): array
     {
