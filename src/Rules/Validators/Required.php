@@ -12,6 +12,8 @@
 namespace Gocanto\Attributes\Rules\Validators;
 
 use Gocanto\Attributes\Rules\Constraint;
+use InvalidArgumentException;
+use Webmozart\Assert\Assert;
 
 class Required implements Constraint
 {
@@ -29,6 +31,12 @@ class Required implements Constraint
      */
     public function canReject($value): bool
     {
-        return empty($value);
+        try {
+            Assert::notEmpty($value);
+        } catch (InvalidArgumentException $exception) {
+            return true;
+        }
+
+        return false;
     }
 }
