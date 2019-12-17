@@ -3,14 +3,10 @@
   "name": "gocanto/attributes",
   "homepage": "https://github.com/gocanto/attributes",
   "type": "php-bundle",
-  "description": "Validated attributes bag.",
+  "description": "Framework agnostic attributes bag with validations rules.",
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "keywords": [
-    "php",
-    "attributes",
-    "bag"
-  ],
+  "keywords": ["php", "attributes", "bag"],
   "authors": [
     {
       "name": "Gustavo Ocanto",
