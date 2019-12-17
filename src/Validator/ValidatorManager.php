@@ -59,12 +59,11 @@ final class ValidatorManager implements Validator
      */
     private function assertDataIntegrity(ConstraintsCollection $constraints, string $field, $value): void
     {
-        foreach ($constraints->get() as $constraints) {
-            if ($constraints->canReject($value)) {
-                $error = "The given [{$field}] value does not abide by [{$constraints->getIdentifier()}] rule.";
-
-                throw new AttributesException($error);
-            }
+        foreach ($constraints->get() as $constraint) {
+            $constraint->assert(
+                $value,
+                "The given [{$field}] value does not abide by [{$constraint->getIdentifier()}] rule."
+            );
         }
     }
 }

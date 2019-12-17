@@ -11,6 +11,8 @@
 
 namespace Gocanto\Attributes\Rules;
 
+use Gocanto\Attributes\AttributesException;
+
 interface Constraint
 {
     /**
@@ -20,7 +22,9 @@ interface Constraint
 
     /**
      * @param mixed $value
-     * @return bool
+     * @param string $message
+     * @throws AttributesException
+     * @return void
      */
-    public function canReject($value): bool;
+    public function assert($value, string $message = ''): void;
 }

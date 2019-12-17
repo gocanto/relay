@@ -11,6 +11,7 @@
 
 namespace Gocanto\Attributes\Rules\Validators;
 
+use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Rules\Constraint;
 use InvalidArgumentException;
 use Webmozart\Assert\Assert;
@@ -18,7 +19,7 @@ use Webmozart\Assert\Assert;
 class Required implements Constraint
 {
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getIdentifier(): string
     {
@@ -26,17 +27,18 @@ class Required implements Constraint
     }
 
     /**
-     * @param mixed $value
-     * @return bool
+     * @inheritDoc
      */
-    public function canReject($value): bool
+    public function assert($value, $message = ''): void
     {
         try {
-            Assert::notEmpty($value);
+            Assert::notEmpty($value, $message);
         } catch (InvalidArgumentException $exception) {
-            return true;
-        }
+            $message = trim($message) === ''
+                ? $exception->getMessage()
+                : $message;
 
-        return false;
+            throw new AttributesException($message, $exception->getCode(), $exception);
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Gocanto\Attributes\Tests\Rules\Constraint;
 
+use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Rules\Constraint;
 use Gocanto\Attributes\Rules\Validators\Required;
 use PHPUnit\Framework\TestCase;
@@ -16,12 +17,44 @@ class RequiredTest extends TestCase
         $constraint = new Required;
 
         $this->assertInstanceOf(Constraint::class, $constraint);
-
         $this->assertSame('required', $constraint->getIdentifier());
+    }
 
-        $this->assertTrue($constraint->canReject(''));
-        $this->assertTrue($constraint->canReject(null));
+    /**
+     * @test
+     * @throws AttributesException
+     */
+    public function itProperlyValidateTheInputAndReturnGenericMessages()
+    {
+        $this->expectException(AttributesException::class);
+        $this->expectExceptionMessageMatches('/non-empty value/');
 
-        $this->assertFalse($constraint->canReject('foo'));
+        $constraint = new Required;
+        $constraint->assert('');
+    }
+
+    /**
+     * @test
+     * @throws AttributesException
+     */
+    public function itProperlyValidateTheInputAndReturnCustomMessages()
+    {
+        $this->expectException(AttributesException::class);
+        $this->expectExceptionMessageMatches('/foo bar/');
+
+        $constraint = new Required;
+        $constraint->assert('', 'foo bar');
+    }
+
+    /**
+     * @test
+     * @throws AttributesException
+     */
+    public function itAllowsValidValues()
+    {
+        $this->doesNotPerformAssertions();
+
+        $constraint = new Required;
+        $constraint->assert('foo', 'foo bar');
     }
 }
