@@ -2,9 +2,7 @@
 
 namespace Gocanto\Attributes\Tests\Support;
 
-use ArrayAccess;
 use Gocanto\Attributes\Support\Arr;
-use Mockery;
 use PHPUnit\Framework\TestCase;
 
 class ArrTest extends TestCase
@@ -29,23 +27,10 @@ class ArrTest extends TestCase
     /**
      * @test
      */
-    public function itChecksWhetherTheGivenValueIsArrayAccessible()
-    {
-        $this->assertTrue(Arr::accessible($this->fields));
-        $this->assertTrue(Arr::accessible(Mockery::mock(ArrayAccess::class)));
-    }
-
-    /**
-     * @test
-     */
     public function itChecksForExistingKeys()
     {
         $this->assertTrue(Arr::exists($this->fields, 'name'));
         $this->assertFalse(Arr::exists($this->fields, 'address.country'));
-
-        $array = Mockery::mock(ArrayAccess::class);
-        $array->shouldReceive('offsetExists')->once()->with('name')->andReturn(true);
-        $this->assertTrue(Arr::exists($array, 'name'));
     }
 
     /**
@@ -53,7 +38,7 @@ class ArrTest extends TestCase
      */
     public function itAllowsPullingValuesUsingDotNotation()
     {
-        $this->assertNull(Arr::get('__INVALID___', 'name'));
+        $this->assertNull(Arr::get($this->fields, 'bar'));
 
         $this->assertSame('Gustavo', Arr::get($this->fields, 'name'));
         $this->assertSame('Venezuela', Arr::get($this->fields, 'address.country'));
