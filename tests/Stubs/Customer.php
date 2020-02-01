@@ -3,6 +3,8 @@
 namespace Gocanto\Attributes\Tests\Stubs;
 
 use Gocanto\Attributes\Attributes;
+use Gocanto\Attributes\Rules\Validators\Boolean;
+use Gocanto\Attributes\Rules\Validators\Email;
 use Gocanto\Attributes\Rules\Validators\Required;
 use Gocanto\Attributes\Rules\Validators\StringNotEmpty;
 
@@ -14,6 +16,8 @@ class Customer extends Attributes
             'first_name' => [new Required()],
             'last_name' => [new StringNotEmpty()],
             'require_value' => [new Required()],
+            'is_admin' => [new Boolean()],
+            'email' => [new Email()],
         ];
     }
 }
