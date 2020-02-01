@@ -4,32 +4,12 @@ namespace Gocanto\Attributes\Tests\Rules;
 
 use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Rules\Constraint;
-use Gocanto\Attributes\Rules\ConstraintsCollection;
 use Gocanto\Attributes\Rules\RulesCollection;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
 class RulesCollectionTest extends TestCase
 {
-    /**
-     * @test
-     * @throws AttributesException
-     */
-    public function itHoldValidData()
-    {
-        $rules = [
-            $this->getConstraintMock(),
-        ];
-
-        $collection = new RulesCollection([
-            'foo' => $rules,
-        ]);
-
-        $this->assertFalse($collection->isEmpty());
-        $this->assertNull($collection->getFor('bar'));
-        $this->assertEquals(new ConstraintsCollection('foo', $rules), $collection->getFor('foo'));
-    }
-
     /**
      * @test
      * @throws AttributesException

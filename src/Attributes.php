@@ -13,6 +13,7 @@ namespace Gocanto\Attributes;
 
 use Gocanto\Attributes\Rules\Constraint;
 use Gocanto\Attributes\Rules\RulesCollection;
+use Gocanto\Attributes\Support\Arr;
 use Gocanto\Attributes\Validator\Validator;
 use Gocanto\Attributes\Validator\ValidatorManager;
 
@@ -25,23 +26,52 @@ abstract class Attributes
 
     /**
      * @param array<string, mixed> $data
-     * @param Validator|null $validator
      * @throws AttributesException
      */
-    public function __construct(array $data, Validator $validator = null)
+    public function __construct(array $data)
     {
-        $this->validator = $validator ?? $this->resolveValidator();
-
         $this->guard($data);
 
         $this->data = $data;
     }
 
     /**
+     * @param array<string, mixed> $data
+     * @throws AttributesException
+     */
+    private function guard(array $data): void
+    {
+        if (empty($data)) {
+            throw new AttributesException('The given data is invalid.');
+        }
+
+        $validator = $this->getValidator();
+
+        if ($validator->isEmpty()) {
+            return;
+        }
+
+        $validator->validate($data);
+    }
+
+    /**
+     * @param Validator $validator
+     * @return $this
+     */
+    public function withValidator(Validator $validator): self
+    {
+        $attributes = clone $this;
+
+        $attributes->validator = $validator;
+
+        return $attributes;
+    }
+
+    /**
      * @return Validator
      * @throws AttributesException
      */
-    private function resolveValidator(): Validator
+    public function getValidator(): Validator
     {
         if ($this->validator !== null) {
             return $this->validator;
@@ -57,22 +87,20 @@ abstract class Attributes
     }
 
     /**
-     * @param array<string, mixed> $data
-     * @throws AttributesException
+     * @return array<string, Constraint>
      */
-    private function guard(array $data): void
+    protected function getValidationRules(): array
     {
-        if (empty($data)) {
-            throw new AttributesException('The given data is invalid.');
-        }
+        return [];
+    }
 
-        $validator = $this->resolveValidator();
-
-        if ($validator->isEmpty()) {
-            return;
-        }
-
-        $validator->validate($data);
+    /**
+     * @param string $key
+     * @return mixed|null
+     */
+    public function get(string $key)
+    {
+        return Arr::get($this->data, $key);
     }
 
     /**
@@ -81,13 +109,5 @@ abstract class Attributes
     public function toArray(): array
     {
         return $this->data;
-    }
-
-    /**
-     * @return array<string, Constraint>
-     */
-    protected function getValidationRules(): array
-    {
-        return [];
     }
 }

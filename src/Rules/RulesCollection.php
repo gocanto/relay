@@ -16,7 +16,7 @@ use Gocanto\Attributes\Support\Arr;
 
 class RulesCollection
 {
-    /** @var array */
+    /** @var array<string, ConstraintsCollection> */
     private $rules = [];
 
     /**
@@ -47,23 +47,14 @@ class RulesCollection
     public function add(string $field, array $constraints): void
     {
         if (Arr::exists($this->rules, $field)) {
-            throw new AttributesException("The given [{$field}] constraints already exist.");
+            throw new AttributesException("The given field [{$field}] constraints already exist.");
         }
 
         if (empty($constraints)) {
-            throw new AttributesException("The given [{$field}] constraints are required.");
+            throw new AttributesException("The given field [{$field}] constraints are required.");
         }
 
         $this->rules[$field] = new ConstraintsCollection($field, $constraints);
-    }
-
-    /**
-     * @param string $field
-     * @return ConstraintsCollection|null
-     */
-    public function getFor(string $field): ?ConstraintsCollection
-    {
-        return Arr::get($this->rules, $field);
     }
 
     /**
@@ -72,5 +63,13 @@ class RulesCollection
     public function isEmpty(): bool
     {
         return count($this->rules) === 0;
+    }
+
+    /**
+     * @return array<string, ConstraintsCollection>
+     */
+    public function get(): array
+    {
+        return $this->rules;
     }
 }

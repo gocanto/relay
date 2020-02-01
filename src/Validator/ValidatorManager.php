@@ -14,6 +14,7 @@ namespace Gocanto\Attributes\Validator;
 use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Rules\ConstraintsCollection;
 use Gocanto\Attributes\Rules\RulesCollection;
+use Gocanto\Attributes\Support\Arr;
 
 final class ValidatorManager implements Validator
 {
@@ -42,12 +43,20 @@ final class ValidatorManager implements Validator
      */
     public function validate(array $data): void
     {
-        foreach ($data as $field => $value) {
-            $constraints = $this->rules->getFor($field);
+        foreach ($this->rules->get() as $field => $constraints) {
+            /** @var ConstraintsCollection $constraints */
 
-            if ($constraints !== null && $constraints->isNotEmpty()) {
-                $this->assertDataIntegrity($constraints, $field, $value);
+            $value = Arr::get($data, $field);
+
+            if ($value === null) {
+                throw new AttributesException("The given filed [{$field}] is invalid.");
             }
+
+            if ($constraints->isEmpty()) {
+                continue;
+            }
+
+            $this->assert($constraints, $field, $value);
         }
     }
 
@@ -57,13 +66,12 @@ final class ValidatorManager implements Validator
      * @param mixed $value
      * @throws AttributesException
      */
-    private function assertDataIntegrity(ConstraintsCollection $constraints, string $field, $value): void
+    private function assert(ConstraintsCollection $constraints, string $field, $value): void
     {
         foreach ($constraints->get() as $constraint) {
-            $constraint->assert(
-                $value,
-                "The given [{$field}] value does not abide by [{$constraint->getIdentifier()}] rule."
-            );
+            $error = "The given [{$field}] value does not abide by the [{$constraint->getIdentifier()}] rule.";
+
+            $constraint->assert($value, $error);
         }
     }
 }

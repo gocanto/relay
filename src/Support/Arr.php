@@ -17,7 +17,7 @@ class Arr
     /**
      * @param array<int|string, mixed> $array
      * @param string $key
-     * @return array<int|string, mixed>|mixed
+     * @return array<int|string, mixed>|mixed|null
      */
     public static function get(array $array, string $key)
     {
