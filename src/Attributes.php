@@ -42,7 +42,7 @@ abstract class Attributes
     private function guard(array $data): void
     {
         if (empty($data)) {
-            throw new AttributesException('The given data is invalid.');
+            throw new AttributesException('The given attributes data cannot be empty.');
         }
 
         $validator = $this->getValidator();

@@ -2,68 +2,72 @@
 
 namespace Gocanto\Attributes\Tests;
 
-use Gocanto\Attributes\Attributes;
 use Gocanto\Attributes\AttributesException;
-use Gocanto\Attributes\Validator\Validator;
-use Mockery;
-use Mockery\LegacyMockInterface;
-use Mockery\MockInterface;
+use Gocanto\Attributes\Tests\Stubs\Customer;
 use PHPUnit\Framework\TestCase;
 
 class AttributesTest extends TestCase
 {
-    /** @var Validator|LegacyMockInterface|MockInterface */
-    private $validator;
-
-    protected function setUp(): void
+    /**
+     * @test
+     * @throws AttributesException
+     */
+    public function itAllowsValidData()
     {
-        $this->validator = Mockery::mock(Validator::class);
+        $customer = new Customer($data = [
+            'first_name' => 'gustavo',
+            'last_name' => 'ocanto',
+            'require_value' => 'foo',
+        ]);
+
+        $this->assertSame('gustavo', $customer->get('first_name'));
+        $this->assertSame('ocanto', $customer->get('last_name'));
+        $this->assertSame('foo', $customer->get('require_value'));
+        $this->assertSame($data, $customer->toArray());
     }
 
     /**
      * @test
+     * @throws AttributesException
      */
     public function itGuardsAgainstEmptyData()
     {
         $this->expectException(AttributesException::class);
-        $this->expectExceptionMessageMatches('/The given data is invalid/');
+        $this->expectExceptionMessageMatches('/The given attributes data cannot be empty/');
 
-        new class([]) extends Attributes {
-        };
+        new Customer([]);
     }
 
     /**
      * @test
+     * @throws AttributesException
      */
-    public function itProperlySerializesDataAsArray()
+    public function itGuardsAgainstInvalidRequiredValues()
     {
-        $data = [
-            'foo' => 'bar',
-        ];
+        $this->expectException(AttributesException::class);
+        $this->expectExceptionMessageMatches('/require_value/');
+        $this->expectExceptionMessageMatches('/require/');
 
-        $this->validator->shouldReceive('isEmpty')->once()->andReturn(true);
-
-        $attr = new class($data) extends Attributes {
-        };
-
-        $this->assertEquals($attr->toArray(), $data);
+        new Customer([
+            'first_name' => 'gustavo',
+            'last_name' => 'ocanto',
+            'require_value' => '',
+        ]);
     }
 
     /**
      * @test
+     * @throws AttributesException
      */
-    public function itTriesToValidateTheGivenDataIfRulesWhereFound()
+    public function emptyStringsAreNotAllowedForTheGivenCustomerLastName()
     {
-        $data = [
-            'foo' => 'bar',
-        ];
+        $this->expectException(AttributesException::class);
+        $this->expectExceptionMessageMatches('/last_name/');
+        $this->expectExceptionMessageMatches('/string-not-empty/');
 
-        $this->validator->shouldReceive('isEmpty')->once()->andReturn(false);
-        $this->validator->shouldReceive('validate')->once()->with($data);
-
-        $attr = new class($data, $this->validator) extends Attributes {
-        };
-
-        $this->assertEquals($attr->toArray(), $data);
+        new Customer([
+            'first_name' => 'gustavo',
+            'last_name' => '',
+        ]);
     }
 }

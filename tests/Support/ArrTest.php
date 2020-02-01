@@ -19,7 +19,7 @@ class ArrTest extends TestCase
                 'country' => 'Venezuela',
                 'foo' => [
                     'bar' => 'biz value',
-                ]
+                ],
             ],
         ];
     }
