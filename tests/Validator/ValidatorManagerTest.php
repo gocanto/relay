@@ -3,31 +3,21 @@
 namespace Gocanto\Attributes\Tests\Validator;
 
 use Gocanto\Attributes\AttributesException;
-use Gocanto\Attributes\Rules\ConstraintsCollection;
+use Gocanto\Attributes\Rules\Constraint;
 use Gocanto\Attributes\Rules\RulesCollection;
-use Gocanto\Attributes\Rules\Validators\Required;
 use Gocanto\Attributes\Validator\ValidatorManager;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
 class ValidatorManagerTest extends TestCase
 {
-    /** @var RulesCollection|Mockery\LegacyMockInterface|Mockery\MockInterface */
-    private $rules;
-
-    protected function setUp(): void
-    {
-        $this->rules = Mockery::mock(RulesCollection::class);
-    }
-
     /**
      * @test
+     * @throws AttributesException
      */
     public function itChecksWhetherThereAreValidationRules()
     {
-        $this->rules->shouldReceive('isEmpty')->once()->andReturn(true);
-
-        $validator = new ValidatorManager($this->rules);
+        $validator = new ValidatorManager(new RulesCollection([]));
 
         $this->assertTrue($validator->isEmpty());
     }
@@ -36,55 +26,47 @@ class ValidatorManagerTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itSkipsValidationsIfRulesForGivenDataWereNotFound()
-    {
-        $this->rules->shouldReceive('getFor')->once()->with('foo')->andReturn(null);
-
-        $validator = new ValidatorManager($this->rules);
-
-        $validator->validate([
-            'foo' => 'bar',
-        ]);
-    }
-
-    /**
-     * @test
-     * @throws AttributesException
-     */
-    public function itDoesNotRejectValidData()
-    {
-        $constraints = new ConstraintsCollection('foo', [
-            new Required,
-        ]);
-
-        $this->rules->shouldReceive('getFor')->once()->with('foo')->andReturn($constraints);
-
-        $validator = new ValidatorManager($this->rules);
-
-        $validator->validate([
-            'foo' => 'bar',
-        ]);
-    }
-
-    /**
-     * @test
-     * @throws AttributesException
-     */
-    public function itRejectsInvalidDatabasedOnTheGivenRules()
+    public function itGuardsAgainstInvalidValidationsThatRequireData()
     {
         $this->expectException(AttributesException::class);
-        $this->expectExceptionMessageMatches('/required/');
+        $this->expectExceptionMessageMatches('/was not provided/');
 
-        $constraints = new ConstraintsCollection('foo', [
-            new Required,
+        $constraint = Mockery::mock(Constraint::class);
+        $constraint->shouldReceive('getIdentifier')->once()->with()->andReturn('foo');
+
+        $rules = new RulesCollection([
+            'foo' => [$constraint],
         ]);
 
-        $this->rules->shouldReceive('getFor')->once()->with('foo')->andReturn($constraints);
-
-        $validator = new ValidatorManager($this->rules);
+        $validator = new ValidatorManager($rules);
 
         $validator->validate([
-            'foo' => '',
+            'bar' => null,
+        ]);
+    }
+
+    /**
+     * @test
+     * @throws AttributesException
+     */
+    public function itGuardsAgainstInvalidData()
+    {
+        $constraint = Mockery::mock(Constraint::class);
+        $constraint->shouldReceive('getIdentifier')->once()->with()->andReturn('foo');
+        $constraint->shouldReceive('assert')->once()->withArgs(function ($value, string $message) {
+            $this->assertStringContainsString('does not abide by', $message);
+
+            return $value === 'bar';
+        });
+
+        $rules = new RulesCollection([
+            'foo' => [$constraint],
+        ]);
+
+        $validator = new ValidatorManager($rules);
+
+        $validator->validate([
+            'foo' => 'bar',
         ]);
     }
 }

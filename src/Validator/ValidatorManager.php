@@ -49,11 +49,7 @@ final class ValidatorManager implements Validator
             $value = Arr::get($data, $field);
 
             if ($value === null) {
-                throw new AttributesException("The given filed [{$field}] is invalid.");
-            }
-
-            if ($constraints->isEmpty()) {
-                continue;
+                throw new AttributesException("The given filed [{$field}] was not provided.");
             }
 
             $this->assert($constraints, $field, $value);

@@ -14,7 +14,7 @@ namespace Gocanto\Attributes\Rules;
 use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Support\Arr;
 
-class RulesCollection
+final class RulesCollection
 {
     /** @var array<string, ConstraintsCollection> */
     private $rules = [];

@@ -14,7 +14,7 @@ namespace Gocanto\Attributes\Rules;
 use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Support\Arr;
 
-class ConstraintsCollection
+final class ConstraintsCollection
 {
     /** @var string */
     private $field;
