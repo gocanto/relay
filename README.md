@@ -1,5 +1,9 @@
 ## About it
 
+<a href="https://packagist.org/packages/gocanto/attributes"><img src="https://img.shields.io/packagist/dt/gocanto/attributes.svg?style=flat-square" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/gocanto/attributes"><img src="https://img.shields.io/github/v/release/gocanto/attributes.svg?style=flat-square" alt="Latest Stable Version"></a>
+<a href="https://travis-ci.org/gocanto/attributes"><img src="https://img.shields.io/travis/gocanto/attributes/master.svg?style=flat-square" alt="Build status"></a>
+
 Attributes is a data holder bag that allows you to `validate` your application data `integrity` before performing 
 any important task, such as `API integrations` request, storing data in your `database`, `HTTP` request data validation
 and so on. 
