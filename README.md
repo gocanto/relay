@@ -38,7 +38,7 @@ object by extending the `Attribuets class` and have this functionality out the b
 ## How does it work?
 
 The way how this package work is very simple, you just need to create a plain object and make it extends the 
-[abstract attributes](https://github.com/gocanto/attributes/blob/master/src/Attributes.php#L19) class shipped with this 
+[abstract attributes](https://github.com/gocanto/attributes/blob/master/src/Attributes.php) class shipped with this 
 code base. Like so: 
 
 ```php
@@ -101,18 +101,16 @@ $value = new MyValueObject([
 ]);
 ```
 
-## Caveats
+## Custome rules
 
-The package currently support just the `required` rules, therefore, it is pretty limited at the moment. Nevertheless, 
-it ships with the famous [assert](https://github.com/webmozart/assert) package and I am planing to add as many rules as 
-possible out the box. In fact, the `required` rules makes use of it by calling the `Assert::notEmpty()` action.
+Creating custom validation rules is an easy task using this package. The only thing you have to do to accomplish such a 
+task is to implement the [constraint interface](https://github.com/gocanto/attributes/blob/master/src/Rules/Constraint.php) 
+on the object you are holding the validation rule. After you have done that, 
+you can new up this new validation rule to validate your data against it.
 
-Moreover, adding new rules on the mand should not be an issue since you can create your own. The only required step 
-would be to implment the 
-[constraint interface](https://github.com/gocanto/attributes/blob/master/src/Rules/Constraint.php) shipped witin this
-code base. Then, you will be able to attach your rules however you need by returning them as an array as shown above.
-
-See a rule example [here](https://github.com/gocanto/attributes/blob/master/src/Rules/Validators/Required.php#L19)
+You can see an example of objects implementing this interface in [here](https://github.com/gocanto/attributes/tree/master/src/Rules/Validators).
+Also, you might want to take a look at these consumers [examples](https://github.com/gocanto/attributes/blob/master/tests/AttributesTest.php)
+for you to understand how to validate your inputs.
 
 ## Contributing
 
