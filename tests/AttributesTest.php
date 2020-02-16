@@ -9,6 +9,8 @@ use Gocanto\Attributes\Rules\Validators\Email;
 use Gocanto\Attributes\Rules\Validators\Required;
 use Gocanto\Attributes\Rules\Validators\StringNotEmpty;
 use Gocanto\Attributes\Tests\Stubs\Customer;
+use Gocanto\Attributes\Validator\Validator;
+use Mockery;
 use PHPUnit\Framework\TestCase;
 
 class AttributesTest extends TestCase
@@ -121,5 +123,36 @@ class AttributesTest extends TestCase
                 ];
             }
         };
+    }
+
+    /**
+     * @test
+     */
+    public function itReturnsTheSameDataIfNotValidationsRulesWereFound()
+    {
+        $attributes = new class(['email' => 'foo']) extends Attributes {
+        };
+
+        $data = $attributes->toArray();
+
+        $this->assertEquals('foo', $data['email']);
+    }
+
+    /**
+     * @test
+     * @throws AttributesException
+     */
+    public function itAllowsSwappingItsValidator()
+    {
+        $attributes = new class(['email' => 'foo']) extends Attributes {
+        };
+
+        $this->assertInstanceOf(Validator::class, $attributes->getValidator());
+
+        $validator = Mockery::mock(Validator::class);
+
+        $attrs = $attributes->withValidator($validator);
+
+        $this->assertSame($validator, $attrs->getValidator());
     }
 }
