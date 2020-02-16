@@ -19,7 +19,9 @@ have it installed in your machine.
 Once you have done this, you will be able to pull this library in by typing the following command in your terminal.
 
 ```bash
+
 composer require gocanto/attributes
+
 ```
 
 ## The reason behind it
