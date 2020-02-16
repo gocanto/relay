@@ -4,7 +4,7 @@ namespace Gocanto\Attributes\Tests\Rules\Validators;
 
 use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Rules\Constraint;
-use Gocanto\Attributes\Rules\Validators\Numeric;
+use Gocanto\Attributes\Rules\Validators\NumericRule;
 use PHPUnit\Framework\TestCase;
 
 class NumericTest extends TestCase
@@ -14,7 +14,7 @@ class NumericTest extends TestCase
      */
     public function itHoldsValidData()
     {
-        $constraint = new Numeric();
+        $constraint = new NumericRule();
 
         $this->assertInstanceOf(Constraint::class, $constraint);
         $this->assertSame('numeric', $constraint->getIdentifier());
@@ -29,7 +29,7 @@ class NumericTest extends TestCase
         $this->expectException(AttributesException::class);
         $this->expectExceptionMessageMatches('/Expected a numeric. Got/');
 
-        $constraint = new Numeric();
+        $constraint = new NumericRule();
         $constraint->assert('foo');
     }
 
@@ -42,7 +42,7 @@ class NumericTest extends TestCase
         $this->expectException(AttributesException::class);
         $this->expectExceptionMessageMatches('/Message error stub/');
 
-        $constraint = new Numeric();
+        $constraint = new NumericRule();
         $constraint->assert('foo', 'Message error stub');
     }
 
@@ -54,7 +54,7 @@ class NumericTest extends TestCase
     {
         $this->doesNotPerformAssertions();
 
-        $constraint = new Numeric();
+        $constraint = new NumericRule();
         $constraint->assert(1);
     }
 }

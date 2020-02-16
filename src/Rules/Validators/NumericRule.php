@@ -16,7 +16,7 @@ use Gocanto\Attributes\Rules\Constraint;
 use InvalidArgumentException;
 use Webmozart\Assert\Assert;
 
-class Numeric implements Constraint
+class NumericRule implements Constraint
 {
     /**
      * @inheritDoc

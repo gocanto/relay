@@ -18,6 +18,7 @@ use Webmozart\Assert\Assert;
 
 class Same implements Constraint
 {
+    /** @var mixed */
     private $expect;
 
     /**
