@@ -15,17 +15,6 @@ class ValidatorManagerTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itChecksWhetherThereAreValidationRules()
-    {
-        $validator = new ValidatorManager(new RulesCollection([]));
-
-        $this->assertTrue($validator->isEmpty());
-    }
-
-    /**
-     * @test
-     * @throws AttributesException
-     */
     public function itGuardsAgainstInvalidValidationsThatRequireData()
     {
         $this->expectException(AttributesException::class);

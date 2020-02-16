@@ -47,10 +47,6 @@ abstract class Attributes
 
         $validator = $this->getValidator();
 
-        if ($validator->isEmpty()) {
-            return;
-        }
-
         $validator->validate($data);
     }
 

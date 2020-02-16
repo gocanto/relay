@@ -30,14 +30,6 @@ final class ValidatorManager implements Validator
     }
 
     /**
-     * @return bool
-     */
-    public function isEmpty(): bool
-    {
-        return $this->rules->isEmpty();
-    }
-
-    /**
      * @param array<string, mixed> $data
      * @throws AttributesException
      */
