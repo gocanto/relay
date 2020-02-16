@@ -1,23 +1,23 @@
 <?php declare(strict_types=1);
 
-namespace Gocanto\Attributes\Tests\Rules\Constraint;
+namespace Gocanto\Attributes\Tests\Rules\Validators;
 
 use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Rules\Constraint;
-use Gocanto\Attributes\Rules\Validators\Required;
+use Gocanto\Attributes\Rules\Validators\Email;
 use PHPUnit\Framework\TestCase;
 
-class RequiredTest extends TestCase
+class EmailTest extends TestCase
 {
     /**
      * @test
      */
     public function itHoldsValidData()
     {
-        $constraint = new Required;
+        $constraint = new Email();
 
         $this->assertInstanceOf(Constraint::class, $constraint);
-        $this->assertSame('required', $constraint->getIdentifier());
+        $this->assertSame('email', $constraint->getIdentifier());
     }
 
     /**
@@ -27,10 +27,10 @@ class RequiredTest extends TestCase
     public function itProperlyValidateTheInputAndReturnGenericMessages()
     {
         $this->expectException(AttributesException::class);
-        $this->expectExceptionMessageMatches('/non-empty value/');
+        $this->expectExceptionMessageMatches('/Expected a value to be a valid e-mail address/');
 
-        $constraint = new Required;
-        $constraint->assert('');
+        $constraint = new Email();
+        $constraint->assert('foo');
     }
 
     /**
@@ -40,10 +40,10 @@ class RequiredTest extends TestCase
     public function itProperlyValidateTheInputAndReturnCustomMessages()
     {
         $this->expectException(AttributesException::class);
-        $this->expectExceptionMessageMatches('/foo bar/');
+        $this->expectExceptionMessageMatches('/Message error stub/');
 
-        $constraint = new Required;
-        $constraint->assert('', 'foo bar');
+        $constraint = new Email();
+        $constraint->assert('foo', 'Message error stub');
     }
 
     /**
@@ -54,7 +54,7 @@ class RequiredTest extends TestCase
     {
         $this->doesNotPerformAssertions();
 
-        $constraint = new Required;
-        $constraint->assert('foo', 'foo bar');
+        $constraint = new Email();
+        $constraint->assert('gustavoocanto@gmail.com');
     }
 }

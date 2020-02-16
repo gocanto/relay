@@ -16,7 +16,7 @@ use Gocanto\Attributes\Rules\Constraint;
 use InvalidArgumentException;
 use Webmozart\Assert\Assert;
 
-class Interger implements Constraint
+class IntegerRule implements Constraint
 {
     /**
      * @inheritDoc
