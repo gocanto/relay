@@ -18,7 +18,7 @@
     "issues": "https://github.com/gocanto/attributes/issues"
   },
   "require": {
-    "php": "^7.3",
+    "php": "^7.4",
     "ext-json": "*",
     "symfony/validator": "^5.0",
     "webmozart/assert": "^1.6"
