@@ -11,83 +11,32 @@
 
 namespace Gocanto\Attributes;
 
-use Gocanto\Attributes\Rules\Constraint;
-use Gocanto\Attributes\Rules\RulesCollection;
 use Gocanto\Attributes\Support\Arr;
-use Gocanto\Attributes\Validator\Validator;
-use Gocanto\Attributes\Validator\ValidatorManager;
 
 abstract class Attributes
 {
-    /** @var array */
-    private $data;
-    /** @var Validator|null */
-    private $validator;
+    private array $data;
 
-    /**
-     * @param array<string, mixed> $data
-     * @throws AttributesException
-     */
-    public function __construct(array $data)
+    public function __construct(array $data, array $rules = [])
     {
-        $this->guard($data);
-
-        $this->data = $data;
+        $this->data = $this->parse($data, $rules);
     }
 
-    /**
-     * @param array<string, mixed> $data
-     * @throws AttributesException
-     */
-    private function guard(array $data): void
+    private function parse(array $data, array $rules)
     {
-        if (empty($data)) {
-            throw new AttributesException('The given attributes data cannot be empty.');
+        $sanitized = [];
+
+        foreach ($data as $field => $item) {
+            $type = Arr::get($rules, $field);
+
+            if ($type === null) {
+                $sanitized[$field] = $item;
+            } else {
+                $sanitized[$field] = $type[0]::create($item);
+            }
         }
 
-        $validator = $this->getValidator();
-
-        $validator->validate($data);
-    }
-
-    /**
-     * @param Validator $validator
-     * @return $this
-     */
-    public function withValidator(Validator $validator): self
-    {
-        $attributes = clone $this;
-
-        $attributes->validator = $validator;
-
-        return $attributes;
-    }
-
-    /**
-     * @return Validator
-     * @throws AttributesException
-     */
-    public function getValidator(): Validator
-    {
-        if ($this->validator !== null) {
-            return $this->validator;
-        }
-
-        $rules = new RulesCollection(
-            $this->getValidationRules()
-        );
-
-        $this->validator = new ValidatorManager($rules);
-
-        return $this->validator;
-    }
-
-    /**
-     * @return array<string, Constraint>
-     */
-    protected function getValidationRules(): array
-    {
-        return [];
+        return $sanitized;
     }
 
     /**

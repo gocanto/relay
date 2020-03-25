@@ -2,9 +2,8 @@
 
 namespace Gocanto\Attributes\Tests;
 
-use Gocanto\Attributes\Payload;
+use Gocanto\Attributes\Tests\Stubs\Payload;
 use Gocanto\Attributes\Types\Url;
-use Gocanto\Attributes\Value;
 use PHPUnit\Framework\TestCase;
 
 class PayloadTest extends TestCase
@@ -14,11 +13,16 @@ class PayloadTest extends TestCase
      */
     public function testingThisCode()
     {
+
         $data = [
-            new Value('website', 'http://google.com', [Url::class]),
+            'website' => 'http://google.com',
         ];
 
-        $payload = new Payload($data);
+        $rules = [
+            'website' => [Url::class],
+        ];
+
+        $payload = new Payload($data, $rules);
 
         $website = $payload->get('website');
 
