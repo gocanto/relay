@@ -3,6 +3,7 @@
 namespace Gocanto\Attributes\Tests;
 
 use Gocanto\Attributes\Tests\Stubs\Payload;
+use Gocanto\Attributes\Types\Optional;
 use Gocanto\Attributes\Types\Url;
 use PHPUnit\Framework\TestCase;
 
@@ -20,6 +21,7 @@ class PayloadTest extends TestCase
 
         $rules = [
             'website' => [Url::class],
+            'profile_url' => [Url::class, Optional::class],
         ];
 
         $payload = new Payload($data, $rules);

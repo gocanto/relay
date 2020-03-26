@@ -14,6 +14,11 @@ class Arr
         return array_key_exists($key, $array);
     }
 
+    public static function has(array $array, string $key): bool
+    {
+        return in_array($key, $array, true);
+    }
+
     /**
      * @param array<int|string, mixed> $array
      * @param string $key

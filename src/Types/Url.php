@@ -8,24 +8,18 @@ use Symfony\Component\Validator\Constraints\Url as UrlConstraint;
 
 class Url implements Type
 {
-    private string $value;
+    public const IDENTIFIER = 'url';
 
-    private function __construct()
-    {
-    }
+    private string $value;
 
     /**
      * @throws AttributesException
      */
-    public static function create(string $value): Url
+    public function __construct(string $value)
     {
-        $url = new static();
+        Assert::assert($value, $this->getConstraint(), "The given url [{$value}] is invalid.");
 
-        Assert::assert($value, $url->getConstraint(), "The given url [{$value}] is invalid.");
-
-        $url->value = $value;
-
-        return $url;
+        $this->value = $value;
     }
 
     public function getConstraint(): array
@@ -37,7 +31,7 @@ class Url implements Type
 
     public function getIdentifier(): string
     {
-        return 'url';
+        return self::IDENTIFIER;
     }
 
     public function get(): string

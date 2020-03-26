@@ -12,31 +12,48 @@
 namespace Gocanto\Attributes;
 
 use Gocanto\Attributes\Support\Arr;
+use Gocanto\Attributes\Types\TypesCollection;
+use Gocanto\Attributes\Types\Type;
 
 abstract class Attributes
 {
     private array $data;
 
-    public function __construct(array $data, array $rules = [])
+    private TypesCollection $types;
+
+    public function __construct(array $data, array $types = [])
     {
-        $this->data = $this->parse($data, $rules);
+        $this->types = new TypesCollection($types);
+
+        $this->data = $this->parse($data);
     }
 
-    private function parse(array $data, array $rules)
+    private function parse(array $payload): array
     {
-        $sanitized = [];
+        $data = [];
 
-        foreach ($data as $field => $item) {
-            $type = Arr::get($rules, $field);
-
-            if ($type === null) {
-                $sanitized[$field] = $item;
-            } else {
-                $sanitized[$field] = $type[0]::create($item);
-            }
+        foreach ($payload as $field => $value) {
+            $data[$field] = $this->resolveItem($field, $value);
         }
 
-        return $sanitized;
+        return $data;
+    }
+
+    /**
+     * @param string $field
+     * @param $value
+     * @return mixed
+     */
+    private function resolveItem(string $field, $value)
+    {
+        if ($this->types->isOptional($field)) {
+            return $value;
+        }
+
+        /** @var Type $type */
+        $type = $this->types->get($field);
+
+        return new $type($value);
     }
 
     /**
