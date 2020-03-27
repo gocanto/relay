@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Gocanto\Attributes;
+namespace Gocanto\Attributes\Support;
 
-use Gocanto\Attributes\Support\Arr;
+use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Types\Type;
 
-class Collection
+class AttributesCollection
 {
     /** @var Type[] */
     private array $items = [];

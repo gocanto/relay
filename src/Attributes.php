@@ -11,13 +11,14 @@
 
 namespace Gocanto\Attributes;
 
+use Gocanto\Attributes\Support\AttributesCollection;
 use Gocanto\Attributes\Types\Mixed;
 use Gocanto\Attributes\Types\Type;
 use Gocanto\Attributes\Types\TypesCollection;
 
 abstract class Attributes
 {
-    private Collection $attributes;
+    private AttributesCollection $attributes;
 
     private TypesCollection $types;
 
@@ -38,7 +39,7 @@ abstract class Attributes
      */
     private function parse(array $data = [], array $types = []): void
     {
-        $attributes = new Collection();
+        $attributes = new AttributesCollection();
         $types = new TypesCollection($types);
 
         foreach ($data as $field => $value) {
