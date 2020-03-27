@@ -17,22 +17,11 @@ class Promoter
      */
     private function __construct(string $candidate)
     {
-        $this->guard($candidate);
-
-        $this->candidate = $candidate;
-    }
-
-    /**
-     * @param string $candidate
-     * @throws AttributesException
-     */
-    private function guard(string $candidate): void
-    {
-        if (class_exists($candidate, true)) {
-            return;
+        if (!class_exists($candidate, true)) {
+            throw new AttributesException("The given candidate [{$candidate}] does not exist.");
         }
 
-        throw new AttributesException("The given candidate [{$candidate}] does not exist.");
+        $this->candidate = $candidate;
     }
 
     /**
