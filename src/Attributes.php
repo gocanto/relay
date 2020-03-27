@@ -11,12 +11,11 @@
 
 namespace Gocanto\Attributes;
 
-use Gocanto\Attributes\Support\Arr;
 use Gocanto\Attributes\Types\TypesCollection;
 
 abstract class Attributes
 {
-    private array $data;
+    private Collection $data;
 
     private TypesCollection $types;
 
@@ -24,7 +23,9 @@ abstract class Attributes
     {
         $this->types = new TypesCollection($types);
 
-        $this->data = $this->parse($data);
+        $this->data = new Collection(
+            $this->parse($data)
+        );
     }
 
     private function parse(array $payload): array
@@ -44,7 +45,7 @@ abstract class Attributes
      */
     public function get(string $key)
     {
-        return Arr::get($this->data, $key);
+        return $this->data->get($key);
     }
 
     /**
@@ -52,6 +53,6 @@ abstract class Attributes
      */
     public function toArray(): array
     {
-        return $this->data;
+        return $this->data->toArray();
     }
 }
