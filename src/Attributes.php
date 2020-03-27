@@ -13,7 +13,6 @@ namespace Gocanto\Attributes;
 
 use Gocanto\Attributes\Support\Arr;
 use Gocanto\Attributes\Types\TypesCollection;
-use Gocanto\Attributes\Types\Type;
 
 abstract class Attributes
 {
@@ -33,27 +32,10 @@ abstract class Attributes
         $data = [];
 
         foreach ($payload as $field => $value) {
-            $data[$field] = $this->resolveItem($field, $value);
+            $data[$field] = $this->types->getTypeFor($field, $value);
         }
 
         return $data;
-    }
-
-    /**
-     * @param string $field
-     * @param $value
-     * @return mixed
-     */
-    private function resolveItem(string $field, $value)
-    {
-        if ($this->types->isOptional($field)) {
-            return $value;
-        }
-
-        /** @var Type $type */
-        $type = $this->types->get($field);
-
-        return new $type($value);
     }
 
     /**

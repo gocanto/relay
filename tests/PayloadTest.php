@@ -2,8 +2,9 @@
 
 namespace Gocanto\Attributes\Tests;
 
+use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Tests\Stubs\Payload;
-use Gocanto\Attributes\Types\Optional;
+use Gocanto\Attributes\Types\Promoter;
 use Gocanto\Attributes\Types\Url;
 use PHPUnit\Framework\TestCase;
 
@@ -11,6 +12,7 @@ class PayloadTest extends TestCase
 {
     /**
      * @test
+     * @throws AttributesException
      */
     public function testingThisCode()
     {
@@ -20,8 +22,8 @@ class PayloadTest extends TestCase
         ];
 
         $rules = [
-            'website' => [Url::class],
-            'profile_url' => [Url::class, Optional::class],
+            'website' => Promoter::make(Url::class),
+            'profile_url' => Promoter::optional(Url::class),
         ];
 
         $payload = new Payload($data, $rules);

@@ -19,23 +19,19 @@ class TypesCollection
         return count($this->types) === 0;
     }
 
-    public function isOptional(string $field): bool
+    public function getPromoterFor(string $field): ?Promoter
     {
-        $types = Arr::get($this->types, $field);
-
-        if ($types === null) {
-            return true;
-        }
-
-        return Arr::has($types, Optional::class);
+        return Arr::get($this->types, $field);
     }
 
-    public function get(string $field): string
+    public function getTypeFor(string $field, $value): Type
     {
-        $type = array_filter(Arr::get($this->types, $field), function (string $value) {
-            return $value !== Optional::class;
-        });
+        $promoter = $this->getPromoterFor($field);
 
-        return $type[0];
+        if ($promoter === null) {
+            return new Mixed($value);
+        }
+
+        return $promoter->build($value);
     }
 }

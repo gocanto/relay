@@ -2,9 +2,9 @@
 
 namespace Gocanto\Attributes\Types;
 
-class Optional implements Type
+class Mixed implements Type
 {
-    public const IDENTIFIER = 'optional';
+    public const IDENTIFIER = 'mixed';
 
     public function getConstraint(): array
     {
