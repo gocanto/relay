@@ -2,37 +2,43 @@
 
 namespace Gocanto\Attributes\Types;
 
-use Gocanto\Attributes\Assert;
 use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Type;
 use Symfony\Component\Validator\Constraints\Url as UrlConstraint;
 
 class Url implements Type
 {
-    public const IDENTIFIER = 'url';
-
     private string $value;
 
-    /**
-     * @throws AttributesException
-     */
-    public function __construct(string $value)
+    private function __construct()
     {
-        Assert::assert($value, $this->getConstraint(), "The given url [{$value}] is invalid.");
-
-        $this->value = $value;
     }
 
-    public function getConstraint(): array
+    /**
+     * @param $value
+     * @return static
+     * @throws AttributesException
+     */
+    public static function make($value): self
+    {
+        Assert::assert($value, self::constraints(), "The given url [{$value}] is invalid.");
+
+        $url = new static();
+        $url->value = $value;
+
+        return $url;
+    }
+
+    public static function constraints(): array
     {
         return [
             new UrlConstraint(),
         ];
     }
 
-    public function getIdentifier(): string
+    public static function identifier(): string
     {
-        return self::IDENTIFIER;
+        return 'url';
     }
 
     public function get(): string

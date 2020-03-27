@@ -56,16 +56,19 @@ abstract class Attributes
      */
     public function get(string $field): ?Type
     {
+        $abstract = $this->attributes->get($field);
         $promoter = $this->types->getPromoterFor($field);
 
-        if ($promoter === null) {
-            return new Mixed($field);
+        if ($abstract === null && $promoter !== null) {
+            throw new AttributesException("The given field [{$field}] is required.");
         }
 
-        $type = $this->attributes->get($field);
+        if ($abstract === null) {
+            return null;
+        }
 
-        if (is_a($type, $promoter->getCandidate())) {
-            return $type;
+        if (is_a($abstract, $promoter->getCandidate())) {
+            return $abstract;
         }
 
         throw new AttributesException("The given field [{$field}] has an invalid type.");

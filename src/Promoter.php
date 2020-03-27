@@ -62,8 +62,9 @@ class Promoter
 
     public function build($value): Type
     {
+        /** @var Type $type */
         $type = $this->candidate;
 
-        return new $type($value);
+        return $type::make($value);
     }
 }

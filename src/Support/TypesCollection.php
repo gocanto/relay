@@ -21,6 +21,16 @@ class TypesCollection
         return count($this->types) === 0;
     }
 
+    public function has(string $field): bool
+    {
+        return Arr::exists($this->types, $field);
+    }
+
+    public function missing(string $field): bool
+    {
+        return !Arr::exists($this->types, $field);
+    }
+
     public function getPromoterFor(string $field): ?Promoter
     {
         return Arr::get($this->types, $field);
@@ -31,7 +41,7 @@ class TypesCollection
         $promoter = $this->getPromoterFor($field);
 
         if ($promoter === null) {
-            return new Mixed($value);
+            return Mixed::make($value);
         }
 
         return $promoter->build($value);

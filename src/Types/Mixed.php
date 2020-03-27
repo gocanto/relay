@@ -6,31 +6,62 @@ use Gocanto\Attributes\Type;
 
 class Mixed implements Type
 {
-    public const IDENTIFIER = 'mixed';
-
     /** @var mixed */
     private $value;
 
-    public function __construct($value)
+    private function __construct()
     {
-        $this->value = $value;
     }
 
-    public function getConstraint(): array
+    public static function make($value): self
+    {
+        $mixed = new static();
+        $mixed->value = $value;
+
+        return $mixed;
+    }
+
+    public static function identifier(): string
+    {
+        return 'mixed';
+    }
+
+    public static function constraints(): array
     {
         return [];
     }
 
-    public function getIdentifier(): string
-    {
-        return self::IDENTIFIER;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getValue()
+    public function get()
     {
         return $this->value;
+    }
+
+    public function isArray(): bool
+    {
+        return is_array($this->value);
+    }
+
+    public function isEmpty(): bool
+    {
+        return $this->isArray()
+            ? count($this->value) === 0
+            : empty($this->value);
+    }
+
+    public function toString(): string
+    {
+        return $this->isArray()
+            ? json_encode($this->value)
+            : (string) $this->value;
+    }
+
+    public function toInt(): int
+    {
+        return (int) $this->value;
+    }
+
+    public function toFloat(): float
+    {
+        return (float) $this->value;
     }
 }
