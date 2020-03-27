@@ -2,6 +2,8 @@
 
 namespace Gocanto\Attributes\Types;
 
+use Gocanto\Attributes\Type;
+
 class Mixed implements Type
 {
     public const IDENTIFIER = 'mixed';

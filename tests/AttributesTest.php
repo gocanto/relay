@@ -3,8 +3,8 @@
 namespace Gocanto\Attributes\Tests;
 
 use Gocanto\Attributes\AttributesException;
+use Gocanto\Attributes\Promoter;
 use Gocanto\Attributes\Tests\Stubs\Payload;
-use Gocanto\Attributes\Types\Promoter;
 use Gocanto\Attributes\Types\Url;
 use PHPUnit\Framework\TestCase;
 

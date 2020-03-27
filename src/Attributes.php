@@ -13,8 +13,7 @@ namespace Gocanto\Attributes;
 
 use Gocanto\Attributes\Support\AttributesCollection;
 use Gocanto\Attributes\Types\Mixed;
-use Gocanto\Attributes\Types\Type;
-use Gocanto\Attributes\Types\TypesCollection;
+use Gocanto\Attributes\Support\TypesCollection;
 
 abstract class Attributes
 {

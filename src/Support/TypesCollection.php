@@ -1,8 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Gocanto\Attributes\Types;
+namespace Gocanto\Attributes\Support;
 
-use Gocanto\Attributes\Support\Arr;
+use Gocanto\Attributes\Promoter;
+use Gocanto\Attributes\Type;
+use Gocanto\Attributes\Types\Mixed;
 
 class TypesCollection
 {

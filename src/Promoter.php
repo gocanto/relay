@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gocanto\Attributes\Types;
-
-use Gocanto\Attributes\AttributesException;
+namespace Gocanto\Attributes;
 
 class Promoter
 {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Gocanto\Attributes\Support;
 
 use Gocanto\Attributes\AttributesException;
-use Gocanto\Attributes\Types\Type;
+use Gocanto\Attributes\Type;
 
 class AttributesCollection
 {

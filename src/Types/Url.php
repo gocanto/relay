@@ -4,6 +4,7 @@ namespace Gocanto\Attributes\Types;
 
 use Gocanto\Attributes\Assert;
 use Gocanto\Attributes\AttributesException;
+use Gocanto\Attributes\Type;
 use Symfony\Component\Validator\Constraints\Url as UrlConstraint;
 
 class Url implements Type
