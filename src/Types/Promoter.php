@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Gocanto\Attributes\Types;
 
@@ -10,18 +12,32 @@ class Promoter
     private string $candidate;
 
     /**
+     * @param string $candidate
      * @throws AttributesException
      */
     private function __construct(string $candidate)
     {
-        if (!class_exists($candidate, true)) {
-            throw new AttributesException("The given candidate [{$candidate}] does not exist.");
-        }
+        $this->guard($candidate);
 
         $this->candidate = $candidate;
     }
 
     /**
+     * @param string $candidate
+     * @throws AttributesException
+     */
+    private function guard(string $candidate): void
+    {
+        if (class_exists($candidate, true)) {
+            return;
+        }
+
+        throw new AttributesException("The given candidate [{$candidate}] does not exist.");
+    }
+
+    /**
+     * @param string $candidate
+     * @return Promoter
      * @throws AttributesException
      */
     public static function make(string $candidate): self
@@ -30,6 +46,8 @@ class Promoter
     }
 
     /**
+     * @param string $candidate
+     * @return Promoter
      * @throws AttributesException
      */
     public static function optional(string $candidate): self
@@ -45,6 +63,14 @@ class Promoter
         $this->optional = true;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCandidate(): string
+    {
+        return $this->candidate;
     }
 
     public function build($value): Type

@@ -11,41 +11,64 @@
 
 namespace Gocanto\Attributes;
 
+use Gocanto\Attributes\Types\Mixed;
+use Gocanto\Attributes\Types\Type;
 use Gocanto\Attributes\Types\TypesCollection;
 
 abstract class Attributes
 {
-    private Collection $data;
+    private Collection $attributes;
 
     private TypesCollection $types;
 
-    public function __construct(array $data, array $types = [])
+    /**
+     * @param array $data
+     * @param array $types
+     * @throws AttributesException
+     */
+    public function __construct(array $data = [], array $types = [])
     {
-        $this->types = new TypesCollection($types);
-
-        $this->data = new Collection(
-            $this->parse($data)
-        );
-    }
-
-    private function parse(array $payload): array
-    {
-        $data = [];
-
-        foreach ($payload as $field => $value) {
-            $data[$field] = $this->types->getTypeFor($field, $value);
-        }
-
-        return $data;
+        $this->parse($data, $types);
     }
 
     /**
-     * @param string $key
-     * @return mixed|null
+     * @param array $data
+     * @param array $types
+     * @throws AttributesException
      */
-    public function get(string $key)
+    private function parse(array $data = [], array $types = []): void
     {
-        return $this->data->get($key);
+        $attributes = new Collection();
+        $types = new TypesCollection($types);
+
+        foreach ($data as $field => $value) {
+            $attributes->add($field, $types->getTypeFor($field, $value));
+        }
+
+        $this->attributes = $attributes;
+        $this->types = $types;
+    }
+
+    /**
+     * @param string $field
+     * @return Type|null
+     * @throws AttributesException
+     */
+    public function get(string $field): ?Type
+    {
+        $promoter = $this->types->getPromoterFor($field);
+
+        if ($promoter === null) {
+            return new Mixed($field);
+        }
+
+        $type = $this->attributes->get($field);
+
+        if (is_a($type, $promoter->getCandidate())) {
+            return $type;
+        }
+
+        throw new AttributesException("The given field [{$field}] has an invalid type.");
     }
 
     /**
@@ -53,6 +76,6 @@ abstract class Attributes
      */
     public function toArray(): array
     {
-        return $this->data->toArray();
+        return $this->attributes->toArray();
     }
 }

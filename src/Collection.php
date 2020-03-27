@@ -5,24 +5,50 @@ declare(strict_types=1);
 namespace Gocanto\Attributes;
 
 use Gocanto\Attributes\Support\Arr;
+use Gocanto\Attributes\Types\Type;
 
 class Collection
 {
-    private array $items;
+    /** @var Type[] */
+    private array $items = [];
 
+    /**
+     * @param array $items
+     * @throws AttributesException
+     */
     public function __construct(array $items = [])
     {
-        $this->items = $items;
+        foreach ($items as $field => $item) {
+            $this->add($field, $item);
+        }
     }
 
     /**
-     * @return array|mixed|null
+     * @param string $field
+     * @param Type $type
+     * @throws AttributesException
      */
-    public function get(string $key)
+    public function add(string $field, Type $type): void
+    {
+        if (Arr::exists($this->items, $field)) {
+            throw new AttributesException("The given field [{$field}] already exists.");
+        }
+
+        $this->items[$field] = $type;
+    }
+
+    /**
+     * @param string $key
+     * @return Type|null
+     */
+    public function get(string $key): ?Type
     {
         return Arr::get($this->items, $key);
     }
 
+    /**
+     * @return array
+     */
     public function toArray(): array
     {
         return $this->items;

@@ -6,6 +6,14 @@ class Mixed implements Type
 {
     public const IDENTIFIER = 'mixed';
 
+    /** @var mixed */
+    private $value;
+
+    public function __construct($value)
+    {
+        $this->value = $value;
+    }
+
     public function getConstraint(): array
     {
         return [];
@@ -14,5 +22,13 @@ class Mixed implements Type
     public function getIdentifier(): string
     {
         return self::IDENTIFIER;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 }
