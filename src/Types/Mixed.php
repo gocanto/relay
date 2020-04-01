@@ -21,16 +21,6 @@ class Mixed implements Type
         return $mixed;
     }
 
-    public static function identifier(): string
-    {
-        return 'mixed';
-    }
-
-    public static function constraints(): array
-    {
-        return [];
-    }
-
     public function get()
     {
         return $this->value;

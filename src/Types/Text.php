@@ -4,29 +4,25 @@ namespace Gocanto\Attributes\Types;
 
 use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Type;
-use Symfony\Component\Validator\Constraints\Url as UrlConstraint;
+use Symfony\Component\Validator\Constraints\Type as TypeValidator;
 
-class Url implements Type
+class Text implements Type
 {
     private string $value;
 
-    private function __construct()
-    {
-    }
-
     /**
      * @param $value
-     * @return static
+     * @return Type
      * @throws AttributesException
      */
-    public static function make($value): self
+    public static function make($value): Type
     {
-        Assert::assert($value, self::constraints(), "The given url [{$value}] is invalid.");
+        Assert::assert($value, self::constraints(), "The given text [{$value}] is invalid.");
 
-        $url = new static();
-        $url->value = $value;
+        $abstract = new static();
+        $abstract->value = $value;
 
-        return $url;
+        return $abstract;
     }
 
     /**
@@ -36,7 +32,7 @@ class Url implements Type
     private static function constraints(): Constraints
     {
         return new Constraints([
-            new UrlConstraint(),
+            new TypeValidator('string'),
         ]);
     }
 

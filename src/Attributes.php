@@ -67,7 +67,7 @@ abstract class Attributes
             return null;
         }
 
-        if (is_a($abstract, $promoter->getCandidate())) {
+        if ($abstract instanceof Mixed || is_a($abstract, $promoter->getCandidate())) {
             return $abstract;
         }
 
