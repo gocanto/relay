@@ -37,6 +37,11 @@ class Constraints
         $this->constraints[$key] = $constraint;
     }
 
+    public function get(string $key): ?Constraint
+    {
+        return Arr::get($this->constraints, $key);
+    }
+
     public function toArray(): array
     {
         return $this->constraints;
