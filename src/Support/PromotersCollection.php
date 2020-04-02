@@ -10,15 +10,15 @@ use Gocanto\Attributes\Types\Mixed;
 class PromotersCollection
 {
     /** @var array */
-    private array $types = [];
+    private array $promoters = [];
 
     /**
-     * @param array $types
+     * @param array $promoters
      * @throws AttributesException
      */
-    public function __construct(array $types)
+    public function __construct(array $promoters)
     {
-        foreach ($types as $field => $promoter) {
+        foreach ($promoters as $field => $promoter) {
             $this->add($field, $promoter);
         }
     }
@@ -30,31 +30,31 @@ class PromotersCollection
      */
     public function add(string $field, Promoter $promoter): void
     {
-        if (Arr::exists($this->types, $field)) {
+        if (Arr::exists($this->promoters, $field)) {
             throw new AttributesException("The given promoter [{$field}] already exists.");
         }
 
-        $this->types[$field] = $promoter;
+        $this->promoters[$field] = $promoter;
     }
 
     public function isEmpty(): bool
     {
-        return count($this->types) === 0;
+        return count($this->promoters) === 0;
     }
 
     public function has(string $field): bool
     {
-        return Arr::exists($this->types, $field);
+        return Arr::exists($this->promoters, $field);
     }
 
     public function missing(string $field): bool
     {
-        return !Arr::exists($this->types, $field);
+        return !Arr::exists($this->promoters, $field);
     }
 
     public function get(string $field): ?Promoter
     {
-        return Arr::get($this->types, $field);
+        return Arr::get($this->promoters, $field);
     }
 
     public function getTypeFor(string $field, $value): Type
@@ -66,5 +66,10 @@ class PromotersCollection
         }
 
         return $promoter->build($value);
+    }
+
+    public function toArray(): array
+    {
+        return $this->promoters;
     }
 }
