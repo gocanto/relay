@@ -59,7 +59,7 @@ abstract class Attributes
         $abstract = $this->attributes->get($field);
         $promoter = $this->types->getPromoterFor($field);
 
-        if ($abstract === null && $promoter !== null) {
+        if ($abstract === null && ($promoter !== null && $promoter->isRequired())) {
             throw new AttributesException("The given field [{$field}] is required.");
         }
 

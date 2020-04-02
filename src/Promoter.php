@@ -15,11 +15,24 @@ class Promoter
      */
     private function __construct(string $candidate)
     {
+        $this->guard($candidate);
+
+        $this->candidate = $candidate;
+    }
+
+    /**
+     * @param string $candidate
+     * @throws AttributesException
+     */
+    private function guard(string $candidate): void
+    {
         if (!class_exists($candidate, true)) {
             throw new AttributesException("The given candidate [{$candidate}] does not exist.");
         }
 
-        $this->candidate = $candidate;
+        if (!is_a($candidate, Type::class, true)) {
+            throw new AttributesException("The given candidate [{$candidate}] is not a valid type.");
+        }
     }
 
     /**
@@ -58,6 +71,11 @@ class Promoter
     public function getCandidate(): string
     {
         return $this->candidate;
+    }
+
+    public function isRequired(): bool
+    {
+        return $this->optional === false;
     }
 
     public function build($value): Type
