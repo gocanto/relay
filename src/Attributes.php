@@ -13,40 +13,40 @@ namespace Gocanto\Attributes;
 
 use Gocanto\Attributes\Support\AttributesCollection;
 use Gocanto\Attributes\Types\Mixed;
-use Gocanto\Attributes\Support\TypesCollection;
+use Gocanto\Attributes\Support\PromotersCollection;
 
 abstract class Attributes
 {
     private AttributesCollection $attributes;
 
-    private TypesCollection $types;
+    private PromotersCollection $promoters;
 
     /**
      * @param array $data
-     * @param array $types
+     * @param array $promoters
      * @throws AttributesException
      */
-    public function __construct(array $data = [], array $types = [])
+    public function __construct(array $data = [], array $promoters = [])
     {
-        $this->parse($data, $types);
+        $this->parse($data, $promoters);
     }
 
     /**
      * @param array $data
-     * @param array $types
+     * @param array $promoters
      * @throws AttributesException
      */
-    private function parse(array $data = [], array $types = []): void
+    private function parse(array $data = [], array $promoters = []): void
     {
         $attributes = new AttributesCollection();
-        $types = new TypesCollection($types);
+        $promoters = new PromotersCollection($promoters);
 
         foreach ($data as $field => $value) {
-            $attributes->add($field, $types->getTypeFor($field, $value));
+            $attributes->add($field, $promoters->getTypeFor($field, $value));
         }
 
         $this->attributes = $attributes;
-        $this->types = $types;
+        $this->promoters = $promoters;
     }
 
     /**
@@ -57,7 +57,7 @@ abstract class Attributes
     public function get(string $field): ?Type
     {
         $abstract = $this->attributes->get($field);
-        $promoter = $this->types->getPromoterFor($field);
+        $promoter = $this->promoters->get($field);
 
         if ($abstract === null && ($promoter !== null && $promoter->isRequired())) {
             throw new AttributesException("The given field [{$field}] is required.");

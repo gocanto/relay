@@ -2,18 +2,39 @@
 
 namespace Gocanto\Attributes\Support;
 
+use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Promoter;
 use Gocanto\Attributes\Type;
 use Gocanto\Attributes\Types\Mixed;
 
-class TypesCollection
+class PromotersCollection
 {
     /** @var array */
-    private array $types;
+    private array $types = [];
 
+    /**
+     * @param array $types
+     * @throws AttributesException
+     */
     public function __construct(array $types)
     {
-        $this->types = $types;
+        foreach ($types as $field => $promoter) {
+            $this->add($field, $promoter);
+        }
+    }
+
+    /**
+     * @param string $field
+     * @param Promoter $promoter
+     * @throws AttributesException
+     */
+    public function add(string $field, Promoter $promoter): void
+    {
+        if (Arr::exists($this->types, $field)) {
+            throw new AttributesException("The given promoter [{$field}] already exists.");
+        }
+
+        $this->types[$field] = $promoter;
     }
 
     public function isEmpty(): bool
@@ -31,14 +52,14 @@ class TypesCollection
         return !Arr::exists($this->types, $field);
     }
 
-    public function getPromoterFor(string $field): ?Promoter
+    public function get(string $field): ?Promoter
     {
         return Arr::get($this->types, $field);
     }
 
     public function getTypeFor(string $field, $value): Type
     {
-        $promoter = $this->getPromoterFor($field);
+        $promoter = $this->get($field);
 
         if ($promoter === null) {
             return Mixed::make($value);
