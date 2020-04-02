@@ -18,24 +18,10 @@ class PromoterTest extends TestCase
      */
     public function itAllowsOptionalsValues()
     {
-        $data = [
-            'name' => 'Gustavo',
-        ];
+        $promoter = Promoter::optional(Url::class);
 
-        $rules = [
-            'name' => Promoter::make(Text::class),
-            'website' => Promoter::optional(Url::class),
-        ];
-
-        $payload = new Payload($data, $rules);
-
-        $this->assertNull($payload->get('website'));
-
-        /** @var Mixed $name */
-        $name = $payload->get('name');
-
-        $this->assertInstanceOf(Text::class, $name);
-        $this->assertSame('Gustavo', $name->get());
+        $this->assertFalse($promoter->isRequired());
+        $this->assertSame(Url::class, $promoter->getCandidate());
     }
 
     /**

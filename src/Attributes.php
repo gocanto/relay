@@ -58,7 +58,7 @@ abstract class Attributes
     {
         $builder = new Builder($this->attributes, $this->promoters);
 
-        return $builder->get($field);
+        return $builder->build($field);
     }
 
     /**

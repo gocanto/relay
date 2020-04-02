@@ -23,23 +23,19 @@ class Builder
      * @return Type|null
      * @throws AttributesException
      */
-    public function get(string $field): ?Type
+    public function build(string $field): ?Type
     {
-        $abstract = $this->attributes->get($field);
         $promoter = $this->promoters->get($field);
+        $attribute = $this->attributes->get($field);
 
-        if ($abstract === null && ($promoter !== null && $promoter->isRequired())) {
+        if ($attribute === null && ($promoter !== null && $promoter->isRequired())) {
             throw new AttributesException("The given field [{$field}] is required.");
         }
 
-        if ($abstract === null) {
+        if ($attribute === null) {
             return null;
         }
 
-        if ($abstract instanceof Mixed || is_a($abstract, $promoter->getCandidate())) {
-            return $abstract;
-        }
-
-        throw new AttributesException("The given field [{$field}] has an invalid type.");
+        return $attribute;
     }
 }
