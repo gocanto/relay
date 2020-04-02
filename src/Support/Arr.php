@@ -7,11 +7,11 @@ use ArrayAccess;
 class Arr
 {
     /**
-     * @param array<int|string, mixed> $array
+     * @param array|ArrayAccess $array
      * @param string $key
      * @return bool
      */
-    public static function exists(array $array, string $key): bool
+    public static function exists($array, string $key): bool
     {
         if ($array instanceof ArrayAccess) {
             return $array->offsetExists($key);
