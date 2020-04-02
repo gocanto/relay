@@ -38,6 +38,11 @@ class Mixed implements Type
             : empty($this->value);
     }
 
+    public function isNotEmpty(): bool
+    {
+        return !$this->isEmpty();
+    }
+
     public function toString(): string
     {
         return $this->isArray()

@@ -20,6 +20,7 @@ class MixedTest extends TestCase
             'name' => 'Gustavo',
             'options' => [1, 2],
             'age' => 1,
+            'empty' => [],
         ]);
 
         /** @var Mixed $name */
@@ -38,7 +39,7 @@ class MixedTest extends TestCase
         $this->assertTrue($options->isArray());
         $this->assertSame(json_encode($data['options']), $options->toString());
 
-        /** @var Mixed $name */
+        /** @var Mixed $age */
         $age = $payload->get('age');
         $this->assertInstanceOf(Type::class, $name);
         $this->assertInstanceOf(Mixed::class, $name);
@@ -47,5 +48,10 @@ class MixedTest extends TestCase
         $this->assertSame(1, $age->toInt());
         $this->assertSame(1.0, $age->toFloat());
         $this->assertSame('1', $age->toString());
+
+        /** @var Mixed $empty */
+        $empty = $payload->get('empty');
+        $this->assertFalse($empty->isNotEmpty());
+        $this->assertTrue($empty->isEmpty());
     }
 }
