@@ -10,6 +10,10 @@ class Text implements Type
 {
     private string $value;
 
+    private function __construct()
+    {
+    }
+
     /**
      * @param $value
      * @return Type
@@ -17,23 +21,26 @@ class Text implements Type
      */
     public static function make($value): Type
     {
-        Assert::assert($value, self::constraints(), "The given text [{$value}] is invalid.");
+        $text = new static();
+        $text->value = $text->parse($value);
 
-        $abstract = new static();
-        $abstract->value = $value;
-
-        return $abstract;
+        return $text;
     }
 
     /**
-     * @return Constraints
+     * @param $value
+     * @return string
      * @throws AttributesException
      */
-    private static function constraints(): Constraints
+    private function parse($value): string
     {
-        return new Constraints([
+        $constraints = new Constraints([
             new TypeValidator(['type' => 'string']),
         ]);
+
+        Assert::assert($value, $constraints, "The given text [{$value}] is invalid.");
+
+        return $value;
     }
 
     public function get(): string

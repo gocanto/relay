@@ -10,6 +10,10 @@ class Email implements Type
 {
     private string $value;
 
+    private function __construct()
+    {
+    }
+
     /**
      * @param $value
      * @return static
@@ -17,23 +21,26 @@ class Email implements Type
      */
     public static function make($value): self
     {
-        Assert::assert($value, self::constraints(), "The given email [{$value}] is invalid.");
-
         $email = new static();
-        $email->value = $value;
+        $email->value = $email->parse($value);
 
         return $email;
     }
 
     /**
-     * @return Constraints
+     * @param $value
+     * @return string
      * @throws AttributesException
      */
-    private static function constraints(): Constraints
+    private function parse($value): string
     {
-        return new Constraints([
+        $constraints = new Constraints([
             new EmailConstraint(),
         ]);
+
+        Assert::assert($value, $constraints, "The given email [{$value}] is invalid.");
+
+        return $value;
     }
 
     public function getDomain(): string

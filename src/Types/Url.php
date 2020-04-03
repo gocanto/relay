@@ -21,23 +21,26 @@ class Url implements Type
      */
     public static function make($value): self
     {
-        Assert::assert($value, self::constraints(), "The given url [{$value}] is invalid.");
-
         $url = new static();
-        $url->value = $value;
+        $url->value = $url->parse($value);
 
         return $url;
     }
 
     /**
-     * @return Constraints
+     * @param $value
+     * @return string
      * @throws AttributesException
      */
-    private static function constraints(): Constraints
+    private function parse($value): string
     {
-        return new Constraints([
+        $constraints = new Constraints([
             new UrlConstraint(),
         ]);
+
+        Assert::assert($value, $constraints, "The given url [{$value}] is invalid.");
+
+        return $value;
     }
 
     public function get(): string

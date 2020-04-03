@@ -13,6 +13,10 @@ class Boolean implements Type
 
     private bool $value;
 
+    private function __construct()
+    {
+    }
+
     /**
      * @param $value
      * @return Type
@@ -20,12 +24,10 @@ class Boolean implements Type
      */
     public static function make($value): Type
     {
-        $value = self::parse($value);
+        $boolean = new static();
+        $boolean->value = $boolean->parse($value);
 
-        $abstract = new static();
-        $abstract->value = $value;
-
-        return $abstract;
+        return $boolean;
     }
 
     /**
@@ -33,7 +35,7 @@ class Boolean implements Type
      * @return bool
      * @throws AttributesException
      */
-    private static function parse($value): bool
+    private function parse($value): bool
     {
         $value = is_string($value) ? mb_strtolower($value) : $value;
 
@@ -45,20 +47,13 @@ class Boolean implements Type
             return false;
         }
 
-        Assert::assert($value, self::constraints(), "The given text [{$value}] is invalid.");
-
-        return $value;
-    }
-
-    /**
-     * @return Constraints
-     * @throws AttributesException
-     */
-    private static function constraints(): Constraints
-    {
-        return new Constraints([
+        $constraints = new Constraints([
             new TypeValidator(['type' => 'bool']),
         ]);
+
+        Assert::assert($value, $constraints, "The given text [{$value}] is invalid.");
+
+        return $value;
     }
 
     public function isTrue(): bool
