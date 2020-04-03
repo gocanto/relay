@@ -8,8 +8,8 @@ use Symfony\Component\Validator\Constraints\Type as TypeValidator;
 
 class Boolean implements Type
 {
-    public const TRULY = [1, '1', true, 'true', 't', 'y', 'yes'];
-    public const FALSY = [0, '0', false, 'false', 'f', 'n', 'no'];
+    public const TRULY = [1, '1', 'true', 't', 'y', 'yes'];
+    public const FALSY = [0, '0', 'false', 'f', 'n', 'no'];
 
     private bool $value;
 

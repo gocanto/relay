@@ -70,6 +70,32 @@ class BooleanTest extends TestCase
         $payload->get('valid');
     }
 
+    /**
+     * @test
+     */
+    public function itHoldsTrueAndFalseValuesProperly()
+    {
+        $payload = new Payload([
+            'valid' => true,
+            'invalid' => false,
+        ], [
+            'valid' => Promoter::make(Boolean::class),
+            'invalid' => Promoter::make(Boolean::class),
+        ]);
+
+        $valid = $payload->get('valid');
+        $this->assertInstanceOf(Boolean::class, $valid);
+        $this->assertTrue($valid->get());
+        $this->assertTrue($valid->isTrue());
+        $this->assertFalse($valid->isFalse());
+
+        $invalid = $payload->get('invalid');
+        $this->assertInstanceOf(Boolean::class, $invalid);
+        $this->assertFalse($invalid->get());
+        $this->assertFalse($invalid->isTrue());
+        $this->assertTrue($invalid->isFalse());
+    }
+
     private function getPayload(array $allowed): array
     {
         $data = [];
