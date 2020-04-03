@@ -32,7 +32,7 @@ class Text implements Type
     private static function constraints(): Constraints
     {
         return new Constraints([
-            new TypeValidator('string'),
+            new TypeValidator(['type' => 'string']),
         ]);
     }
 
