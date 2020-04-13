@@ -3,6 +3,7 @@
 namespace Gocanto\Attributes\Tests\Types;
 
 use Carbon\CarbonImmutable;
+use DateTimeInterface;
 use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Promoter;
 use Gocanto\Attributes\Tests\Stubs\Payload;
@@ -35,6 +36,7 @@ class DateTest extends TestCase
         $date = $payload->get('date');
         $this->assertInstanceOf(Date::class, $date);
         $this->assertInstanceOf(Type::class, $date);
+        $this->assertSame($now->toDateTimeString(), (string) $date->get());
         $this->assertSame($now->toDateTimeString(), $date->toString());
         $this->assertSame($now->toDateTimeString(), $date->getCarbon()->toDateTimeString());
     }
