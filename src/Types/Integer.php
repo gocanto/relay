@@ -33,7 +33,7 @@ class Integer implements Type
      */
     private function parse($value): int
     {
-        if (is_integer($value)) {
+        if (is_int($value)) {
             return $value;
         }
 

@@ -20,6 +20,7 @@
   "require": {
     "php": "^7.4",
     "ext-json": "*",
+    "nesbot/carbon": "^2.32",
     "symfony/validator": "^5.0"
   },
   "require-dev": {
