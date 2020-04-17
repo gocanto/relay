@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Gocanto\Attributes\Support;
 
@@ -57,6 +59,12 @@ class PromotersCollection
         return Arr::get($this->promoters, $field);
     }
 
+    /**
+     * @param string $field
+     * @param mixed $value
+     * @return Type
+     * @throws AttributesException
+     */
     public function getTypeFor(string $field, $value): Type
     {
         $promoter = $this->get($field);

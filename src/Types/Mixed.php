@@ -1,8 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Gocanto\Attributes\Types;
 
 use Gocanto\Attributes\Type;
+use JsonException;
 
 class Mixed implements Type
 {
@@ -43,10 +46,14 @@ class Mixed implements Type
         return !$this->isEmpty();
     }
 
+    /**
+     * @return string
+     * @throws JsonException
+     */
     public function toString(): string
     {
         return $this->isArray()
-            ? json_encode($this->value)
+            ? json_encode($this->value, JSON_THROW_ON_ERROR)
             : (string) $this->value;
     }
 

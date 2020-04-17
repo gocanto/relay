@@ -7,6 +7,7 @@ namespace Gocanto\Attributes;
 class Promoter
 {
     private bool $optional = false;
+
     private string $candidate;
 
     /**

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Gocanto\Attributes\Types;
 
@@ -33,7 +35,7 @@ class Decimal implements Type
      */
     private function parse($value): float
     {
-        if (is_float($value) || is_integer($value)) {
+        if (is_float($value) || is_int($value)) {
             return (float) $value;
         }
 

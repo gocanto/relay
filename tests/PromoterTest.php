@@ -1,12 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Gocanto\Attributes\Tests;
 
 use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Promoter;
 use Gocanto\Attributes\Tests\Stubs\Payload;
-use Gocanto\Attributes\Types\Mixed;
-use Gocanto\Attributes\Types\Text;
 use Gocanto\Attributes\Types\Url;
 use PHPUnit\Framework\TestCase;
 
