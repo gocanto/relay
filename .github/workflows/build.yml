@@ -27,10 +27,11 @@ jobs:
                   key: php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
             - name: Setup PHP
-              uses: shivammathur/setup-php@v1
+              uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
-                  coverage: none
+                  coverage: xdebug
+                  tools: php-cs-fixer, phpunit
 
             - name: Install dependencies
               run: |
