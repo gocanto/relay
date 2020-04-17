@@ -17,7 +17,7 @@ class Text implements Type
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @return Type
      * @throws AttributesException
      */
@@ -30,7 +30,7 @@ class Text implements Type
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @return string
      * @throws AttributesException
      */

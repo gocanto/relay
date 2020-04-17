@@ -9,7 +9,7 @@ use JsonException;
 
 class Any implements Type
 {
-    /** @var Any */
+    /** @var mixed */
     private $value;
 
     private function __construct()

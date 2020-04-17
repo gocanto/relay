@@ -18,7 +18,7 @@ class Date implements Type
     private CarbonInterface $carbon;
 
     /**
-     * @param string $value
+     * @param mixed $value
      * @return static
      * @throws AttributesException
      */
@@ -58,9 +58,9 @@ class Date implements Type
         return $this->value;
     }
 
-    public function toString(): string
+    public function toString(string $format = 'Y-m-d H:i:s'): string
     {
-        return (string) $this->value;
+        return $this->value->format($format);
     }
 
     public function getCarbon(): CarbonInterface

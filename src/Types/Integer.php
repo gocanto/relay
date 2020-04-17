@@ -16,7 +16,7 @@ class Integer implements Type
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @return Type
      * @throws AttributesException
      */
@@ -29,7 +29,7 @@ class Integer implements Type
     }
 
     /**
-     * @param string|int|Any $value
+     * @param string|int|mixed $value
      * @return int
      * @throws AttributesException
      */
@@ -48,6 +48,10 @@ class Integer implements Type
         throw new AttributesException("The given number {$ref} is invalid.");
     }
 
+    /**
+     * @param mixed $value
+     * @return bool
+     */
     private function canBeInteger($value): bool
     {
         if (!is_string($value) || $this->isNotAllowed($value)) {
@@ -59,6 +63,10 @@ class Integer implements Type
         return ((string) $candidate) === $value;
     }
 
+    /**
+     * @param mixed $value
+     * @return bool
+     */
     private function isNotAllowed($value): bool
     {
         return is_object($value) || is_callable($value);

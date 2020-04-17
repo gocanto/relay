@@ -16,7 +16,7 @@ class Decimal implements Type
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @return Type
      * @throws AttributesException
      */
@@ -29,7 +29,7 @@ class Decimal implements Type
     }
 
     /**
-     * @param string|float|Any $value
+     * @param string|float|mixed $value
      * @return float
      * @throws AttributesException
      */
@@ -43,11 +43,15 @@ class Decimal implements Type
             return (float) $value;
         }
 
-        $ref = $this->isNotAllowed($value) ? '' : "[{$value}]";
+        $ref = $this->isNotAllowed($value) ? '' : '[' . $value . ']';
 
         throw new AttributesException("The given number {$ref} is invalid.");
     }
 
+    /**
+     * @param mixed $value
+     * @return bool
+     */
     private function canBeDecimal($value): bool
     {
         if (!is_string($value) || $this->isNotAllowed($value)) {
@@ -59,6 +63,10 @@ class Decimal implements Type
         return ((string) $candidate) === $value;
     }
 
+    /**
+     * @param mixed $value
+     * @return bool
+     */
     private function isNotAllowed($value): bool
     {
         return is_object($value) || is_callable($value);

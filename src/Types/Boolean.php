@@ -20,7 +20,7 @@ class Boolean implements Type
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @return Type
      * @throws AttributesException
      */
@@ -33,7 +33,7 @@ class Boolean implements Type
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @return bool
      * @throws AttributesException
      */

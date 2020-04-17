@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Validation;
 class Assert
 {
     /**
-     * @param $value
+     * @param mixed $value
      * @param Constraints $constraints
      * @param string|null $error
      * @throws AttributesException

@@ -17,7 +17,7 @@ class Url implements Type
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @return static
      * @throws AttributesException
      */
@@ -30,7 +30,7 @@ class Url implements Type
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @return string
      * @throws AttributesException
      */
