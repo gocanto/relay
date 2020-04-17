@@ -6,6 +6,11 @@ namespace Gocanto\Attributes;
 
 interface Type
 {
+    /**
+     * @param mixed $value
+     * @return static
+     * @throws AttributesException
+     */
     public static function make($value): self;
 
     /**

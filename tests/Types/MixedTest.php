@@ -6,15 +6,16 @@ use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Tests\Stubs\Payload;
 use Gocanto\Attributes\Type;
 use Gocanto\Attributes\Types\Mixed;
+use JsonException;
 use PHPUnit\Framework\TestCase;
 
 class MixedTest extends TestCase
 {
     /**
      * @test
-     * @throws AttributesException
+     * @throws AttributesException|JsonException
      */
-    public function itRulesAreNotGivenTheReturnedTypeIsMixed()
+    public function itRulesAreNotGivenTheReturnedTypeIsMixed(): void
     {
         $payload = new Payload($data = [
             'name' => 'Gustavo',
@@ -31,13 +32,13 @@ class MixedTest extends TestCase
         $this->assertSame('Gustavo', $name->get());
         $this->assertSame('Gustavo', $name->toString());
 
-        /** @var Mixed $name */
+        /** @var Mixed $options */
         $options = $payload->get('options');
         $this->assertInstanceOf(Type::class, $name);
         $this->assertInstanceOf(Mixed::class, $name);
 
         $this->assertTrue($options->isArray());
-        $this->assertSame(json_encode($data['options']), $options->toString());
+        $this->assertSame(json_encode($data['options'], JSON_THROW_ON_ERROR), $options->toString());
 
         /** @var Mixed $age */
         $age = $payload->get('age');

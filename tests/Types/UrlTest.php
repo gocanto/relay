@@ -15,7 +15,7 @@ class UrlTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itReturnsValidUrls()
+    public function itReturnsValidUrls(): void
     {
         $payload = new Payload([
             'website' => 'https://github.com/gocanto',
@@ -33,7 +33,7 @@ class UrlTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itRejectsInvalidUrls()
+    public function itRejectsInvalidUrls(): void
     {
         $this->expectException(AttributesException::class);
         $this->expectExceptionMessageMatches('/invalid/');

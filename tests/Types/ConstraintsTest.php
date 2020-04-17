@@ -14,7 +14,7 @@ class ConstraintsTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itAllowsEmptyValues()
+    public function itAllowsEmptyValues(): void
     {
         $collection = new Constraints($data = []);
 
@@ -25,7 +25,7 @@ class ConstraintsTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itContainsValidConstraints()
+    public function itContainsValidConstraints(): void
     {
         $constraint = Mockery::mock(Constraint::class);
 
@@ -41,7 +41,7 @@ class ConstraintsTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itGuardsAgainstDuplicatedConstraints()
+    public function itGuardsAgainstDuplicatedConstraints(): void
     {
         $this->expectException(AttributesException::class);
         $this->expectExceptionMessageMatches('/already exists/');

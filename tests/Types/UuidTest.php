@@ -38,12 +38,10 @@ class UuidTest extends TestCase
         $this->expectException(AttributesException::class);
         $this->expectExceptionMessageMatches('/invalid/');
 
-        $payload = new Payload([
+        new Payload([
             'uuid' => 'foo',
         ], [
             'uuid' => Promoter::make(Uuid::class),
         ]);
-
-        $payload->get('uuid');
     }
 }

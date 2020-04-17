@@ -15,7 +15,7 @@ class IntegerTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itHoldsValidIntegers()
+    public function itHoldsValidIntegers(): void
     {
         $payload = new Payload([
             'field-1' => 1,
@@ -50,7 +50,7 @@ class IntegerTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itProperlyParseValidStringContainingIntegers()
+    public function itProperlyParseValidStringContainingIntegers(): void
     {
         $payload = new Payload([
             'field-1' => '1',
@@ -85,35 +85,31 @@ class IntegerTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itGuardsAgainstInvalidIntegers()
+    public function itGuardsAgainstInvalidIntegers(): void
     {
         $this->expectException(AttributesException::class);
         $this->expectExceptionMessageMatches('/invalid/');
 
-        $payload = new Payload([
+        new Payload([
             'field-1' => 'foo',
         ], [
             'field-1' => Promoter::make(Integer::class),
         ]);
-
-        $payload->get('field-1');
     }
 
     /**
      * @test
      * @throws AttributesException
      */
-    public function itGuardsAgainstNotAllowedValues()
+    public function itGuardsAgainstNotAllowedValues(): void
     {
         $this->expectException(AttributesException::class);
         $this->expectExceptionMessageMatches('/invalid/');
 
-        $payload = new Payload([
+        new Payload([
             'field-1' => new stdClass(),
         ], [
             'field-1' => Promoter::make(Integer::class),
         ]);
-
-        $payload->get('field-1');
     }
 }

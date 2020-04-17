@@ -4,7 +4,6 @@ namespace Gocanto\Attributes;
 
 use Gocanto\Attributes\Support\AttributesCollection;
 use Gocanto\Attributes\Support\PromotersCollection;
-use Gocanto\Attributes\Types\Mixed;
 
 class Builder
 {

@@ -78,6 +78,11 @@ class Promoter
         return $this->optional === false;
     }
 
+    /**
+     * @param mixed $value
+     * @return Type
+     * @throws AttributesException
+     */
     public function build($value): Type
     {
         /** @var Type $type */

@@ -14,7 +14,7 @@ class BooleanTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itHoldsTrulyValues()
+    public function itHoldsTrulyValues(): void
     {
         $data = $this->getPayload(Boolean::TRULY);
         $promoters = $this->getPromoters($data);
@@ -35,7 +35,7 @@ class BooleanTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itHoldsFalsyValues()
+    public function itHoldsFalsyValues(): void
     {
         $data = $this->getPayload(Boolean::FALSY);
         $promoters = $this->getPromoters($data);
@@ -56,24 +56,23 @@ class BooleanTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itGuardsAgainstInvalidValues()
+    public function itGuardsAgainstInvalidValues(): void
     {
         $this->expectException(AttributesException::class);
         $this->expectExceptionMessageMatches('/invalid/');
 
-        $payload = new Payload([
+        new Payload([
             'valid' => 'foo',
         ], [
             'valid' => Promoter::make(Boolean::class),
         ]);
-
-        $payload->get('valid');
     }
 
     /**
      * @test
+     * @throws AttributesException
      */
-    public function itHoldsTrueAndFalseValuesProperly()
+    public function itHoldsTrueAndFalseValuesProperly(): void
     {
         $payload = new Payload([
             'valid' => true,
@@ -83,12 +82,14 @@ class BooleanTest extends TestCase
             'invalid' => Promoter::make(Boolean::class),
         ]);
 
+        /** @var Boolean $valid */
         $valid = $payload->get('valid');
         $this->assertInstanceOf(Boolean::class, $valid);
         $this->assertTrue($valid->get());
         $this->assertTrue($valid->isTrue());
         $this->assertFalse($valid->isFalse());
 
+        /** @var Boolean $invalid */
         $invalid = $payload->get('invalid');
         $this->assertInstanceOf(Boolean::class, $invalid);
         $this->assertFalse($invalid->get());

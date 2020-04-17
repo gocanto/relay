@@ -15,7 +15,7 @@ class TextTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itReturnsValidTexts()
+    public function itReturnsValidTexts(): void
     {
         $payload = new Payload([
             'name' => 'Gustavo',
@@ -33,7 +33,7 @@ class TextTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itRejectsInvalidTexts()
+    public function itRejectsInvalidTexts(): void
     {
         $this->expectException(AttributesException::class);
         $this->expectExceptionMessageMatches('/invalid/');

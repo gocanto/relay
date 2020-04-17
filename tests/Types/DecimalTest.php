@@ -15,7 +15,7 @@ class DecimalTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itHoldsValidDecimals()
+    public function itHoldsValidDecimals(): void
     {
         $payload = new Payload([
             'field-1' => 1.1,
@@ -50,7 +50,7 @@ class DecimalTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itProperlyParseValidStringContainingDecimals()
+    public function itProperlyParseValidStringContainingDecimals(): void
     {
         $payload = new Payload([
             'field-1' => '1.1',
@@ -85,35 +85,31 @@ class DecimalTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itGuardsAgainstInvalidIntegers()
+    public function itGuardsAgainstInvalidIntegers(): void
     {
         $this->expectException(AttributesException::class);
         $this->expectExceptionMessageMatches('/invalid/');
 
-        $payload = new Payload([
+        new Payload([
             'field-1' => 'foo',
         ], [
             'field-1' => Promoter::make(Decimal::class),
         ]);
-
-        $payload->get('field-1');
     }
 
     /**
      * @test
      * @throws AttributesException
      */
-    public function itGuardsAgainstNotAllowedValues()
+    public function itGuardsAgainstNotAllowedValues(): void
     {
         $this->expectException(AttributesException::class);
         $this->expectExceptionMessageMatches('/invalid/');
 
-        $payload = new Payload([
+        new Payload([
             'field-1' => new stdClass(),
         ], [
             'field-1' => Promoter::make(Decimal::class),
         ]);
-
-        $payload->get('field-1');
     }
 }

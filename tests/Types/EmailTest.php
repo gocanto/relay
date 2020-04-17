@@ -14,7 +14,7 @@ class EmailTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itHoldsValidEmail()
+    public function itHoldsValidEmail(): void
     {
         $payload = new Payload([
             'email' => 'foo@bar.com',
@@ -34,7 +34,7 @@ class EmailTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itRejectsInvalidEmails()
+    public function itRejectsInvalidEmails(): void
     {
         $this->expectException(AttributesException::class);
         $this->expectExceptionMessageMatches('/invalid/');
