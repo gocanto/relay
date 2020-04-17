@@ -30,7 +30,8 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
-                  coverage: xdebug
+                  coverage: none
+                  extensions: mbstring, dom, json, libxml, xml, xmlwriter
                   tools: php-cs-fixer, phpunit
 
             - name: Install dependencies
