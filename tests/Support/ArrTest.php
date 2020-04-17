@@ -1,8 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Gocanto\Attributes\Tests\Support;
 
+use ArrayAccess;
 use Gocanto\Attributes\Support\Arr;
+use Mockery;
 use PHPUnit\Framework\TestCase;
 
 class ArrTest extends TestCase
@@ -31,6 +35,11 @@ class ArrTest extends TestCase
     {
         $this->assertTrue(Arr::exists($this->fields, 'name'));
         $this->assertFalse(Arr::exists($this->fields, 'address.country'));
+
+        $array = Mockery::mock(ArrayAccess::class);
+        $array->shouldReceive('offsetExists')->once()->with('name')->andReturn(true);
+
+        $this->assertTrue(Arr::exists($array, 'name'));
     }
 
     /**

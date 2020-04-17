@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Gocanto Attributes Package
@@ -11,99 +13,61 @@
 
 namespace Gocanto\Attributes;
 
-use Gocanto\Attributes\Rules\Constraint;
-use Gocanto\Attributes\Rules\RulesCollection;
-use Gocanto\Attributes\Support\Arr;
-use Gocanto\Attributes\Validator\Validator;
-use Gocanto\Attributes\Validator\ValidatorManager;
+use Gocanto\Attributes\Support\AttributesCollection;
+use Gocanto\Attributes\Types\Any;
+use Gocanto\Attributes\Support\PromotersCollection;
 
 abstract class Attributes
 {
-    /** @var array */
-    private $data;
-    /** @var Validator|null */
-    private $validator;
+    private AttributesCollection $attributes;
+
+    private PromotersCollection $promoters;
 
     /**
-     * @param array<string, mixed> $data
+     * @param array $data
+     * @param array $promoters
      * @throws AttributesException
      */
-    public function __construct(array $data)
+    public function __construct(array $data = [], array $promoters = [])
     {
-        $this->guard($data);
-
-        $this->data = $data;
+        $this->parse($data, $promoters);
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param array $data
+     * @param array $promoters
      * @throws AttributesException
      */
-    private function guard(array $data): void
+    private function parse(array $data = [], array $promoters = []): void
     {
-        if (empty($data)) {
-            throw new AttributesException('The given attributes data cannot be empty.');
+        $attributes = new AttributesCollection();
+        $promoters = new PromotersCollection($promoters);
+
+        foreach ($data as $field => $value) {
+            $attributes->add($field, $promoters->getTypeFor($field, $value));
         }
 
-        $validator = $this->getValidator();
-
-        $validator->validate($data);
+        $this->attributes = $attributes;
+        $this->promoters = $promoters;
     }
 
     /**
-     * @param Validator $validator
-     * @return $this
-     */
-    public function withValidator(Validator $validator): self
-    {
-        $attributes = clone $this;
-
-        $attributes->validator = $validator;
-
-        return $attributes;
-    }
-
-    /**
-     * @return Validator
+     * @param string $field
+     * @return Type|null
      * @throws AttributesException
      */
-    public function getValidator(): Validator
+    public function get(string $field): ?Type
     {
-        if ($this->validator !== null) {
-            return $this->validator;
-        }
+        $builder = new Builder($this->attributes, $this->promoters);
 
-        $rules = new RulesCollection(
-            $this->getValidationRules()
-        );
-
-        $this->validator = new ValidatorManager($rules);
-
-        return $this->validator;
+        return $builder->build($field);
     }
 
     /**
-     * @return array<string, Constraint>
-     */
-    protected function getValidationRules(): array
-    {
-        return [];
-    }
-
-    /**
-     * @param string $key
-     * @return mixed|null
-     */
-    public function get(string $key)
-    {
-        return Arr::get($this->data, $key);
-    }
-
-    /**
-     * @return array<int|string, mixed>
+     * @return array<int|string, Any>
      */
     public function toArray(): array
     {
-        return $this->data;
+        return $this->attributes->toArray();
     }
 }

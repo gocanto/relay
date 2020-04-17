@@ -1,16 +1,15 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Gocanto\Attributes\Tests;
 
-use Gocanto\Attributes\Attributes;
 use Gocanto\Attributes\AttributesException;
-use Gocanto\Attributes\Rules\Validators\Boolean;
-use Gocanto\Attributes\Rules\Validators\Email;
-use Gocanto\Attributes\Rules\Validators\Required;
-use Gocanto\Attributes\Rules\Validators\StringNotEmpty;
-use Gocanto\Attributes\Tests\Stubs\Customer;
-use Gocanto\Attributes\Validator\Validator;
-use Mockery;
+use Gocanto\Attributes\Promoter;
+use Gocanto\Attributes\Tests\Stubs\Payload;
+use Gocanto\Attributes\Types\Any;
+use Gocanto\Attributes\Types\Text;
+use Gocanto\Attributes\Types\Url;
 use PHPUnit\Framework\TestCase;
 
 class AttributesTest extends TestCase
@@ -19,140 +18,101 @@ class AttributesTest extends TestCase
      * @test
      * @throws AttributesException
      */
-    public function itAllowsValidData()
+    public function itReturnsValidValues()
     {
-        $customer = new Customer($data = [
-            'first_name' => 'gustavo',
-            'last_name' => 'ocanto',
-            'require_value' => 'foo',
-            'is_admin' => true,
-            'email' => 'gustavoocanto@gmail.com',
+        $url = 'https://github.com/gocanto';
+
+        $payload = new Payload([
+            'website' => $url,
+        ], [
+            'website' => Promoter::make(Url::class),
         ]);
 
-        $this->assertSame('gustavo', $customer->get('first_name'));
-        $this->assertSame('ocanto', $customer->get('last_name'));
-        $this->assertSame('foo', $customer->get('require_value'));
-        $this->assertSame('gustavoocanto@gmail.com', $customer->get('email'));
-        $this->assertTrue($customer->get('is_admin'));
-        $this->assertSame($data, $customer->toArray());
-    }
+        $website = $payload->get('website');
 
-    /**
-     * @test
-     */
-    public function itGuardsAgainstEmptyData()
-    {
-        $this->expectException(AttributesException::class);
-        $this->expectExceptionMessageMatches('/The given attributes data cannot be empty/');
-
-        new class([]) extends Attributes {
-        };
-    }
-
-    /**
-     * @test
-     */
-    public function itGuardsAgainstInvalidRequiredValues()
-    {
-        $this->expectException(AttributesException::class);
-        $this->expectExceptionMessageMatches('/require_value/');
-        $this->expectExceptionMessageMatches('/require/');
-
-        new class(['name' => '']) extends Attributes {
-            protected function getValidationRules(): array
-            {
-                return [
-                    'name' => [new Required()],
-                ];
-            }
-        };
-    }
-
-    /**
-     * @test
-     */
-    public function emptyStringsAreNotAllowedForTheGivenCustomerLastName()
-    {
-        $this->expectException(AttributesException::class);
-        $this->expectExceptionMessageMatches('/last_name/');
-        $this->expectExceptionMessageMatches('/string-not-empty/');
-
-        new class(['name' => '']) extends Attributes {
-            protected function getValidationRules(): array
-            {
-                return [
-                    'name' => [new StringNotEmpty()],
-                ];
-            }
-        };
-    }
-
-    /**
-     * @test
-     */
-    public function itGuardsAgainstInvalidBooleanValues()
-    {
-        $this->expectException(AttributesException::class);
-        $this->expectExceptionMessageMatches('/is_admin/');
-        $this->expectExceptionMessageMatches('/boolean/');
-
-        new class(['is_admin' => 'yes']) extends Attributes {
-            protected function getValidationRules(): array
-            {
-                return [
-                    'is_admin' => [new Boolean()],
-                ];
-            }
-        };
-    }
-
-    /**
-     * @test
-     */
-    public function itGuardsAgainstInvalidEmails()
-    {
-        $this->expectException(AttributesException::class);
-        $this->expectExceptionMessageMatches('/email/');
-        $this->expectExceptionMessageMatches('/email/');
-
-        new class(['email' => 'foo']) extends Attributes {
-            protected function getValidationRules(): array
-            {
-                return [
-                    'email' => [new Email()],
-                ];
-            }
-        };
-    }
-
-    /**
-     * @test
-     */
-    public function itReturnsTheSameDataIfNotValidationsRulesWereFound()
-    {
-        $attributes = new class(['email' => 'foo']) extends Attributes {
-        };
-
-        $data = $attributes->toArray();
-
-        $this->assertEquals('foo', $data['email']);
+        $this->assertInstanceOf(Url::class, $website);
+        $this->assertSame($url, $website->get());
+        $this->assertEquals(['website' => Url::make($url)], $payload->toArray());
     }
 
     /**
      * @test
      * @throws AttributesException
      */
-    public function itAllowsSwappingItsValidator()
+    public function itReturnsNullForValuesThatAreNotRequired()
     {
-        $attributes = new class(['email' => 'foo']) extends Attributes {
-        };
+        $payload = new Payload([
+            'name' => 'gustavo',
+        ], [
+            'name' => Promoter::make(Text::class),
+        ]);
 
-        $this->assertInstanceOf(Validator::class, $attributes->getValidator());
+        $this->assertNull($payload->get('foo'));
+    }
 
-        $validator = Mockery::mock(Validator::class);
+    /**
+     * @test
+     * @throws AttributesException
+     */
+    public function itThrowsExceptionsIfAttributesDontContainGivenRulesFields()
+    {
+        $this->expectException(AttributesException::class);
+        $this->expectExceptionMessageMatches('/required/');
 
-        $attrs = $attributes->withValidator($validator);
+        $payload = new Payload([
+            'last_name' => 'gustavo',
+        ], [
+            'name' => Promoter::make(Text::class),
+        ]);
 
-        $this->assertSame($validator, $attrs->getValidator());
+        $payload->get('name');
+    }
+
+    /**
+     * @test
+     * @throws AttributesException
+     */
+    public function itWrapsUntypedValuesWithinAMixedType()
+    {
+        $payload = new Payload([
+            'name' => 'gustavo',
+            'last_name' => 'ocanto',
+        ], [
+            'last_name' => Promoter::make(Text::class),
+        ]);
+
+        $lastName = $payload->get('last_name');
+        $this->assertInstanceOf(Text::class, $lastName);
+        $this->assertSame('ocanto', $lastName->get());
+
+        $name = $payload->get('name');
+        $this->assertInstanceOf(Any::class, $name);
+        $this->assertSame('gustavo', $name->get());
+    }
+
+    /**
+     * @test
+     * @throws AttributesException
+     */
+    public function itAllowsOptionalsValues()
+    {
+        $data = [
+            'name' => 'Gustavo',
+        ];
+
+        $rules = [
+            'name' => Promoter::make(Text::class),
+            'website' => Promoter::optional(Url::class),
+        ];
+
+        $payload = new Payload($data, $rules);
+
+        $this->assertNull($payload->get('website'));
+
+        /** @var Any $name */
+        $name = $payload->get('name');
+
+        $this->assertInstanceOf(Text::class, $name);
+        $this->assertSame('Gustavo', $name->get());
     }
 }
