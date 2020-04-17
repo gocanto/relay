@@ -7,7 +7,7 @@ namespace Gocanto\Attributes\Tests\Support;
 use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Promoter;
 use Gocanto\Attributes\Support\PromotersCollection;
-use Gocanto\Attributes\Types\Mixed;
+use Gocanto\Attributes\Types\Any;
 use Gocanto\Attributes\Types\Text;
 use PHPUnit\Framework\TestCase;
 
@@ -74,7 +74,7 @@ class PromotersCollectionTest extends TestCase
 
         $type = $collection->getTypeFor('foo', 'gustavo');
 
-        $this->assertInstanceOf(Mixed::class, $type);
+        $this->assertInstanceOf(Any::class, $type);
         $this->assertSame('gustavo', $type->get());
     }
 

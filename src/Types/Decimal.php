@@ -29,7 +29,7 @@ class Decimal implements Type
     }
 
     /**
-     * @param string|float|mixed $value
+     * @param string|float|Any $value
      * @return float
      * @throws AttributesException
      */

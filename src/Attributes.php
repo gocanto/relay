@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Gocanto\Attributes;
 
 use Gocanto\Attributes\Support\AttributesCollection;
-use Gocanto\Attributes\Types\Mixed;
+use Gocanto\Attributes\Types\Any;
 use Gocanto\Attributes\Support\PromotersCollection;
 
 abstract class Attributes
@@ -64,7 +64,7 @@ abstract class Attributes
     }
 
     /**
-     * @return array<int|string, mixed>
+     * @return array<int|string, Any>
      */
     public function toArray(): array
     {

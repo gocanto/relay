@@ -7,7 +7,7 @@ namespace Gocanto\Attributes\Tests;
 use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Promoter;
 use Gocanto\Attributes\Tests\Stubs\Payload;
-use Gocanto\Attributes\Types\Mixed;
+use Gocanto\Attributes\Types\Any;
 use Gocanto\Attributes\Types\Text;
 use Gocanto\Attributes\Types\Url;
 use PHPUnit\Framework\TestCase;
@@ -86,7 +86,7 @@ class AttributesTest extends TestCase
         $this->assertSame('ocanto', $lastName->get());
 
         $name = $payload->get('name');
-        $this->assertInstanceOf(Mixed::class, $name);
+        $this->assertInstanceOf(Any::class, $name);
         $this->assertSame('gustavo', $name->get());
     }
 
@@ -109,7 +109,7 @@ class AttributesTest extends TestCase
 
         $this->assertNull($payload->get('website'));
 
-        /** @var Mixed $name */
+        /** @var Any $name */
         $name = $payload->get('name');
 
         $this->assertInstanceOf(Text::class, $name);

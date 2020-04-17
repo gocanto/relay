@@ -29,7 +29,7 @@ class Integer implements Type
     }
 
     /**
-     * @param string|int|mixed $value
+     * @param string|int|Any $value
      * @return int
      * @throws AttributesException
      */

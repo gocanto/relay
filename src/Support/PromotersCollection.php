@@ -7,7 +7,7 @@ namespace Gocanto\Attributes\Support;
 use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Promoter;
 use Gocanto\Attributes\Type;
-use Gocanto\Attributes\Types\Mixed;
+use Gocanto\Attributes\Types\Any;
 
 class PromotersCollection
 {
@@ -61,7 +61,7 @@ class PromotersCollection
 
     /**
      * @param string $field
-     * @param mixed $value
+     * @param Any $value
      * @return Type
      * @throws AttributesException
      */
@@ -70,7 +70,7 @@ class PromotersCollection
         $promoter = $this->get($field);
 
         if ($promoter === null) {
-            return Mixed::make($value);
+            return Any::make($value);
         }
 
         return $promoter->build($value);

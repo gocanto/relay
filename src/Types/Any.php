@@ -7,9 +7,9 @@ namespace Gocanto\Attributes\Types;
 use Gocanto\Attributes\Type;
 use JsonException;
 
-class Mixed implements Type
+class Any implements Type
 {
-    /** @var mixed */
+    /** @var Any */
     private $value;
 
     private function __construct()

@@ -7,11 +7,11 @@ namespace Gocanto\Attributes\Tests\Types;
 use Gocanto\Attributes\AttributesException;
 use Gocanto\Attributes\Tests\Stubs\Payload;
 use Gocanto\Attributes\Type;
-use Gocanto\Attributes\Types\Mixed;
+use Gocanto\Attributes\Types\Any;
 use JsonException;
 use PHPUnit\Framework\TestCase;
 
-class MixedTest extends TestCase
+class AnyTest extends TestCase
 {
     /**
      * @test
@@ -26,33 +26,33 @@ class MixedTest extends TestCase
             'empty' => [],
         ]);
 
-        /** @var Mixed $name */
+        /** @var Any $name */
         $name = $payload->get('name');
         $this->assertInstanceOf(Type::class, $name);
-        $this->assertInstanceOf(Mixed::class, $name);
+        $this->assertInstanceOf(Any::class, $name);
 
         $this->assertSame('Gustavo', $name->get());
         $this->assertSame('Gustavo', $name->toString());
 
-        /** @var Mixed $options */
+        /** @var Any $options */
         $options = $payload->get('options');
         $this->assertInstanceOf(Type::class, $name);
-        $this->assertInstanceOf(Mixed::class, $name);
+        $this->assertInstanceOf(Any::class, $name);
 
         $this->assertTrue($options->isArray());
         $this->assertSame(json_encode($data['options'], JSON_THROW_ON_ERROR), $options->toString());
 
-        /** @var Mixed $age */
+        /** @var Any $age */
         $age = $payload->get('age');
         $this->assertInstanceOf(Type::class, $name);
-        $this->assertInstanceOf(Mixed::class, $name);
+        $this->assertInstanceOf(Any::class, $name);
 
         $this->assertFalse($age->isArray());
         $this->assertSame(1, $age->toInt());
         $this->assertSame(1.0, $age->toFloat());
         $this->assertSame('1', $age->toString());
 
-        /** @var Mixed $empty */
+        /** @var Any $empty */
         $empty = $payload->get('empty');
         $this->assertFalse($empty->isNotEmpty());
         $this->assertTrue($empty->isEmpty());
