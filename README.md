@@ -4,7 +4,10 @@ If you are looking for the version #1, please click [here](https://github.com/go
 
 
 ## About it
-WIP
+<a href="https://packagist.org/packages/gocanto/attributes"><img src="https://img.shields.io/packagist/dt/gocanto/attributes.svg" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/gocanto/attributes"><img src="https://img.shields.io/github/v/release/gocanto/attributes.svg" alt="Latest Stable Version"></a>
+<a href="https://github.com/gocanto/attributes/actions"><img src="https://github.com/gocanto/attributes/workflows/build/badge.svg" alt="Build status"></a>
+
 
 ## Contributing
 
