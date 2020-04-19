@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Gocanto\Attributes\Tests\Support;
+namespace Gocanto\Relay\Tests\Support;
 
-use Gocanto\Attributes\AttributesException;
-use Gocanto\Attributes\Promoter;
-use Gocanto\Attributes\Support\PromotersCollection;
-use Gocanto\Attributes\Types\Any;
-use Gocanto\Attributes\Types\Text;
+use Gocanto\Relay\AttributesException;
+use Gocanto\Relay\Promoter;
+use Gocanto\Relay\Support\PromotersCollection;
+use Gocanto\Relay\Types\Any;
+use Gocanto\Relay\Types\Text;
 use PHPUnit\Framework\TestCase;
 
 class PromotersCollectionTest extends TestCase

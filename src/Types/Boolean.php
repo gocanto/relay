@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Gocanto\Attributes\Types;
+namespace Gocanto\Relay\Types;
 
-use Gocanto\Attributes\AttributesException;
-use Gocanto\Attributes\Type;
+use Gocanto\Relay\AttributesException;
+use Gocanto\Relay\Type;
 use Symfony\Component\Validator\Constraints\Type as TypeValidator;
 
 class Boolean implements Type

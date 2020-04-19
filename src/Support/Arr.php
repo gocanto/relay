@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gocanto\Attributes\Support;
+namespace Gocanto\Relay\Support;
 
 use ArrayAccess;
 

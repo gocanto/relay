@@ -1,13 +1,15 @@
 {
-  "name": "gocanto/attributes",
+  "name": "gocanto/relay",
   "type": "php-bundle",
-  "description": "Framework agnostic attributes bag with validations rules.",
+  "description": "Unify data transfer object that is framework agnostic.",
   "keywords": [
     "php",
-    "attributes",
-    "bag"
+    "data",
+    "bag",
+    "transfer",
+    "object"
   ],
-  "homepage": "https://github.com/gocanto/attributes",
+  "homepage": "https://github.com/gocanto/relay",
   "license": "MIT",
   "authors": [
     {
@@ -35,12 +37,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Gocanto\\Attributes\\": "src"
+      "Gocanto\\Relay\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Gocanto\\Attributes\\Tests\\": "tests"
+      "Gocanto\\Relay\\Tests\\": "tests"
     }
   },
   "minimum-stability": "dev",
@@ -60,7 +62,7 @@
     ]
   },
   "support": {
-    "issues": "https://github.com/gocanto/attributes/issues",
-    "source": "https://github.com/gocanto/attributes"
+    "issues": "https://github.com/gocanto/relay/issues",
+    "source": "https://github.com/gocanto/relay"
   }
 }

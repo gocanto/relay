@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Gocanto\Attributes;
+namespace Gocanto\Relay;
 
 use Exception;
 use Throwable;

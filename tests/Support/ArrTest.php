@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Gocanto\Attributes\Tests\Support;
+namespace Gocanto\Relay\Tests\Support;
 
 use ArrayAccess;
-use Gocanto\Attributes\Support\Arr;
+use Gocanto\Relay\Support\Arr;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 

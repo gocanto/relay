@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Gocanto\Attributes\Types;
+namespace Gocanto\Relay\Types;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
 use DateTimeInterface;
-use Gocanto\Attributes\AttributesException;
-use Gocanto\Attributes\Type;
+use Gocanto\Relay\AttributesException;
+use Gocanto\Relay\Type;
 use Throwable;
 
 class Date implements Type

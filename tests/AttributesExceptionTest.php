@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Gocanto\Attributes\Tests;
+namespace Gocanto\Relay\Tests;
 
 use Exception;
-use Gocanto\Attributes\AttributesException;
+use Gocanto\Relay\AttributesException;
 use PHPUnit\Framework\TestCase;
 
 class AttributesExceptionTest extends TestCase

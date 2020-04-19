@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Gocanto\Attributes;
+namespace Gocanto\Relay;
 
-use Gocanto\Attributes\Support\AttributesCollection;
-use Gocanto\Attributes\Support\PromotersCollection;
+use Gocanto\Relay\Support\AttributesCollection;
+use Gocanto\Relay\Support\PromotersCollection;
 
 class Builder
 {

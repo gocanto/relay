@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Gocanto\Attributes\Tests\Types;
+namespace Gocanto\Relay\Tests\Types;
 
 use Carbon\CarbonImmutable;
-use Gocanto\Attributes\AttributesException;
-use Gocanto\Attributes\Promoter;
-use Gocanto\Attributes\Tests\Stubs\Payload;
-use Gocanto\Attributes\Type;
-use Gocanto\Attributes\Types\Date;
+use Gocanto\Relay\AttributesException;
+use Gocanto\Relay\Promoter;
+use Gocanto\Relay\Tests\Stubs\Payload;
+use Gocanto\Relay\Type;
+use Gocanto\Relay\Types\Date;
 use PHPUnit\Framework\TestCase;
 
 class DateTest extends TestCase

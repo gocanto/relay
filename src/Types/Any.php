@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Gocanto\Attributes\Types;
+namespace Gocanto\Relay\Types;
 
-use Gocanto\Attributes\Type;
+use Gocanto\Relay\Type;
 use JsonException;
 
 class Any implements Type

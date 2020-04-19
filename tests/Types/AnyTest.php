@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Gocanto\Attributes\Tests\Types;
+namespace Gocanto\Relay\Tests\Types;
 
-use Gocanto\Attributes\AttributesException;
-use Gocanto\Attributes\Tests\Stubs\Payload;
-use Gocanto\Attributes\Type;
-use Gocanto\Attributes\Types\Any;
+use Gocanto\Relay\AttributesException;
+use Gocanto\Relay\Tests\Stubs\Payload;
+use Gocanto\Relay\Type;
+use Gocanto\Relay\Types\Any;
 use JsonException;
 use PHPUnit\Framework\TestCase;
 

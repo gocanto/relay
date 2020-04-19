@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Gocanto\Attributes\Tests\Types;
+namespace Gocanto\Relay\Tests\Types;
 
-use Gocanto\Attributes\AttributesException;
-use Gocanto\Attributes\Types\Constraints;
+use Gocanto\Relay\AttributesException;
+use Gocanto\Relay\Types\Constraints;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraint;

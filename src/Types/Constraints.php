@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Gocanto\Attributes\Types;
+namespace Gocanto\Relay\Types;
 
-use Gocanto\Attributes\AttributesException;
-use Gocanto\Attributes\Support\Arr;
+use Gocanto\Relay\AttributesException;
+use Gocanto\Relay\Support\Arr;
 use Symfony\Component\Validator\Constraint;
 
 class Constraints
