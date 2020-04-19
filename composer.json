@@ -1,22 +1,20 @@
 {
-  "license": "MIT",
   "name": "gocanto/attributes",
-  "homepage": "https://github.com/gocanto/attributes",
   "type": "php-bundle",
   "description": "Framework agnostic attributes bag with validations rules.",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "keywords": ["php", "attributes", "bag"],
+  "keywords": [
+    "php",
+    "attributes",
+    "bag"
+  ],
+  "homepage": "https://github.com/gocanto/attributes",
+  "license": "MIT",
   "authors": [
     {
       "name": "Gustavo Ocanto",
       "email": "gustavoocanto@gmail.com"
     }
   ],
-  "support": {
-    "source": "https://github.com/gocanto/attributes",
-    "issues": "https://github.com/gocanto/attributes/issues"
-  },
   "require": {
     "php": "^7.4",
     "ext-json": "*",
@@ -24,12 +22,16 @@
     "symfony/validator": "^5.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^9.0.0",
-    "mockery/mockery": "^1.0.0",
     "friendsofphp/php-cs-fixer": "^2.0.0",
+    "mockery/mockery": "^1.0.0",
     "phpmd/phpmd": "^2.0.0",
+    "phpunit/phpunit": "^9.0.0",
     "squizlabs/php_codesniffer": "^3.0.0",
     "vimeo/psalm": "^3.0.0"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
   },
   "autoload": {
     "psr-4": {
@@ -41,22 +43,24 @@
       "Gocanto\\Attributes\\Tests\\": "tests"
     }
   },
-  "config": {
-    "sort-packages": true,
-    "optimize-autoloader": true
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "analysis": [
+      "php vendor/bin/psalm"
+    ],
+    "coverage": [
+      "php vendor/bin/phpunit --testsuite=Unit --coverage-html=public/coverage --colors=always"
+    ],
+    "fix-style": [
+      "./vendor/bin/php-cs-fixer fix . --config=.php_cs"
+    ],
+    "test": [
+      "php vendor/bin/phpunit --testsuite=Unit --colors=always"
+    ]
   },
-  "scripts" : {
-      "test": [
-          "php vendor/bin/phpunit --testsuite=Unit --colors=always"
-      ],
-      "coverage": [
-          "php vendor/bin/phpunit --testsuite=Unit --coverage-html=public/coverage --colors=always"
-      ],
-      "analysis": [
-          "php vendor/bin/psalm"
-      ],
-      "fix-style": [
-          "./vendor/bin/php-cs-fixer fix . --config=.php_cs"
-      ]
+  "support": {
+    "issues": "https://github.com/gocanto/attributes/issues",
+    "source": "https://github.com/gocanto/attributes"
   }
 }
