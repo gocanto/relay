@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Gocanto\Attributes\Tests\Support;
+namespace Gocanto\Relay\Tests\Support;
 
-use Gocanto\Attributes\AttributesException;
-use Gocanto\Attributes\Support\AttributesCollection;
-use Gocanto\Attributes\Type;
+use Gocanto\Relay\AttributesException;
+use Gocanto\Relay\Support\AttributesCollection;
+use Gocanto\Relay\Type;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 

@@ -11,11 +11,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Gocanto\Attributes;
+namespace Gocanto\Relay;
 
-use Gocanto\Attributes\Support\AttributesCollection;
-use Gocanto\Attributes\Types\Any;
-use Gocanto\Attributes\Support\PromotersCollection;
+use Gocanto\Relay\Support\AttributesCollection;
+use Gocanto\Relay\Types\Any;
+use Gocanto\Relay\Support\PromotersCollection;
 
 abstract class Attributes
 {

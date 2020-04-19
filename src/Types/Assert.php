@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Gocanto\Attributes\Types;
+namespace Gocanto\Relay\Types;
 
-use Gocanto\Attributes\AttributesException;
+use Gocanto\Relay\AttributesException;
 use Symfony\Component\Validator\Validation;
 
 class Assert

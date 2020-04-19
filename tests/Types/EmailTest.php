@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Gocanto\Attributes\Tests\Types;
+namespace Gocanto\Relay\Tests\Types;
 
-use Gocanto\Attributes\AttributesException;
-use Gocanto\Attributes\Promoter;
-use Gocanto\Attributes\Tests\Stubs\Payload;
-use Gocanto\Attributes\Types\Email;
+use Gocanto\Relay\AttributesException;
+use Gocanto\Relay\Promoter;
+use Gocanto\Relay\Tests\Stubs\Payload;
+use Gocanto\Relay\Types\Email;
 use PHPUnit\Framework\TestCase;
 
 class EmailTest extends TestCase

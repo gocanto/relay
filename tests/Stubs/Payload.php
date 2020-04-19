@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Gocanto\Attributes\Tests\Stubs;
+namespace Gocanto\Relay\Tests\Stubs;
 
-use Gocanto\Attributes\Attributes;
+use Gocanto\Relay\Attributes;
 
 class Payload extends Attributes
 {
