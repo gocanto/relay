@@ -1,4 +1,4 @@
-name: CI Build
+name: build
 
 on:
     push:
@@ -7,28 +7,36 @@ on:
         tags:
             - v*
 jobs:
-    quality:
-        name: Code Quality Checks
-        runs-on: ubuntu-18.04
-        steps:
-            - name: Checkout Code
-              uses: actions/checkout@v1
-            - name: Install Composer
-              uses: MilesChou/composer-action@v1.0.1
-              with:
-                  args: install
-            - name: Run Psalm Checks
-              run: ./vendor/bin/psalm --output-format=compact --show-info=false
-
     test:
-        name: Unit Tests
-        runs-on: ubuntu-18.04
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                php: [7.4]
+                dependency-version: [prefer-lowest, prefer-stable]
+                os: [ubuntu-latest]
+        name: P${{ matrix.php }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
+
         steps:
-            - name: Checkout Code
-              uses: actions/checkout@v1
-            - name: Install Composer
-              uses: MilesChou/composer-action@v1.0.1
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Cache dependencies
+              uses: actions/cache@v1
               with:
-                  args: install
-            - name: Run PHPUnit
-              run: ./vendor/bin/phpunit
+                  path: ~/.composer/cache/files
+                  key: php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  coverage: none
+                  extensions: mbstring, dom, json, libxml, xml, xmlwriter
+                  tools: php-cs-fixer, phpunit
+
+            - name: Install dependencies
+              run: |
+                  composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+
+            - name: Run tests
+              run: vendor/bin/phpunit
