@@ -93,7 +93,8 @@ $email = $payload->get('email');
 $profileUrl = $payload->get('profile_url');
 ```
 Furthermore, you will be given an Any object wrapper if the asked payload key does not have a specified mapping or was
-marked as optional using the `::optional()` [construct method](https://github.com/gocanto/relay/blob/master/src/Promoter.php#L54) within the promoter object.
+marked as optional using the `::optional()` [construct method](https://github.com/gocanto/relay/blob/master/src/Promoter.php#L54)
+within the promoter object. [See example](https://github.com/gocanto/relay/blob/master/tests/AttributesTest.php#L105)
 
 ***Note:*** Any key-value specified in your payload mapper is marked as required
 
