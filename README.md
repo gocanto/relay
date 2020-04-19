@@ -7,9 +7,9 @@ Relay is a data transfer objects structure that allows you to consume third part
 proper type object throughout a promotion mapper to ensure given incoming data abides by its expected type. 
 
 ## How does it work?
-Relay is a self-contained attribute bag that maps their values using promoters that parse given incoming payloads into
-valid data transfer objects. Thus, you will be able to remove the ability to work with unstructured data in your
-application by using proper types through wrappers that take care of any sanitation and constraints validation logic. 
+Relay is a self-contained attribute bag that maps its values using promoters that parse given incoming payloads into
+valid data transfer objects. Thus, you will have the option to remove the ability to work with unstructured data in your
+application by using proper types through wrappers that take care of any sanitation and validation logic constraints. 
 
 ## What are promoters?
 A promoter is a data structure that allows us to map given data with the desired data type. By doing so, we will be able
