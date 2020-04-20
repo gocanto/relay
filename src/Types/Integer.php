@@ -17,10 +17,10 @@ class Integer implements Type
 
     /**
      * @param mixed $value
-     * @return Type
+     * @return self
      * @throws AttributesException
      */
-    public static function make($value): Type
+    public static function make($value): self
     {
         $integer = new static();
         $integer->value = $integer->parse($value);

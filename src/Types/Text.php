@@ -18,10 +18,10 @@ class Text implements Type
 
     /**
      * @param mixed $value
-     * @return Type
+     * @return self
      * @throws AttributesException
      */
-    public static function make($value): Type
+    public static function make($value): self
     {
         $text = new static();
         $text->value = $text->parse($value);

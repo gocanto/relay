@@ -17,10 +17,10 @@ class Decimal implements Type
 
     /**
      * @param mixed $value
-     * @return Type
+     * @return self
      * @throws AttributesException
      */
-    public static function make($value): Type
+    public static function make($value): self
     {
         $decimal = new static();
         $decimal->value = $decimal->parse($value);

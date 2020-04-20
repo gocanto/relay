@@ -21,10 +21,10 @@ class Boolean implements Type
 
     /**
      * @param mixed $value
-     * @return Type
+     * @return self
      * @throws AttributesException
      */
-    public static function make($value): Type
+    public static function make($value): self
     {
         $boolean = new static();
         $boolean->value = $boolean->parse($value);
@@ -55,7 +55,7 @@ class Boolean implements Type
 
         Assert::assert($value, $constraints, "The given text [{$value}] is invalid.");
 
-        return $value;
+        return (bool) $value;
     }
 
     public function isTrue(): bool

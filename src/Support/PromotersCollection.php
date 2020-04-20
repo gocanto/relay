@@ -56,7 +56,7 @@ class PromotersCollection
 
     public function get(string $field): ?Promoter
     {
-        return Arr::get($this->promoters, $field);
+        return $this->promoters[$field] ?? null;
     }
 
     /**
