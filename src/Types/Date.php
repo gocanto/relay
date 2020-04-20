@@ -19,7 +19,7 @@ class Date implements Type
 
     /**
      * @param mixed $value
-     * @return static
+     * @return self
      * @throws AttributesException
      */
     public static function make($value): self

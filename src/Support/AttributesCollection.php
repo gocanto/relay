@@ -43,7 +43,7 @@ class AttributesCollection
      */
     public function get(string $key): ?Type
     {
-        return Arr::get($this->items, $key);
+        return $this->items[$key] ?? null;
     }
 
     /**

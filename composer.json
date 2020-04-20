@@ -49,7 +49,7 @@
   "prefer-stable": true,
   "scripts": {
     "analysis": [
-      "php vendor/bin/psalm"
+      "./vendor/bin/psalm --output-format=compact --show-info=false"
     ],
     "coverage": [
       "php vendor/bin/phpunit --testsuite=Unit --coverage-html=public/coverage --colors=always"
