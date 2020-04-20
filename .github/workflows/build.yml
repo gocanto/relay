@@ -39,8 +39,8 @@ jobs:
                   composer global require hirak/prestissimo
                   composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
 
-            - name: Run tests
+            - name: Run Tests
               run: vendor/bin/phpunit
 
-            - name: Run Psalm Checks
+            - name: Run Psalm
               run: ./vendor/bin/psalm --output-format=compact --show-info=false
