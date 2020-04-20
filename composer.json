@@ -20,11 +20,11 @@
   "require": {
     "php": "^7.4",
     "ext-json": "*",
+    "friendsofphp/php-cs-fixer": "^2.16",
     "nesbot/carbon": "^2.32",
     "symfony/validator": "^5.0"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "^2.0.0",
     "mockery/mockery": "^1.0.0",
     "phpmd/phpmd": "^2.0.0",
     "phpunit/phpunit": "^9.0.0",
