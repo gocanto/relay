@@ -112,6 +112,10 @@ If you would like to know more about the functionality and different uses, pleas
 - [x] Uuid
 - [x] Date
 
+> To learn more about their functionality, you can click on the following links: 
+- Implementation [details](https://github.com/gocanto/relay/tree/master/src/Types)
+- Functionality and uses [details](https://github.com/gocanto/relay/tree/master/tests/Types)
+
 ## Future scopes.
 - [ ] Easier mapping mechanism.
 - [ ] Add more types.
